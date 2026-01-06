@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TEMA 1 – A AGONIA DO IMPÉRIO E O GOLPE REPUBLICANO</title>
+
+  <!-- jsPDF (para salvar em PDF) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#f3f4f6;
+      --card:#ffffff;
+      --ink:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --soft:#f9fafb;
+
+      --primary:#22c55e;
+      --primaryHover:#16a34a;
+
+      --blueSoft:#eaf3ff;
+      --blueLine:#3b82f6;
+
+      --radius:18px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      padding:22px;
+    }
+    .wrap{ max-width:980px; margin:0 auto; }
+
+    header{ text-align:center; margin-bottom:14px; }
+    h1{ margin:0; font-size:28px; letter-spacing:.2px; }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(17,24,39,.06);
+      padding:18px;
+    }
+    .hidden{ display:none; }
+
+    /* ===== ACESSO (SENHA + NOME COMPLETO) ===== */
+    .lockTitle{
+      margin:0 0 8px;
+      font-size:22px;
+      font-weight:900;
+      text-align:center;
+    }
+    .lockDesc{
+      margin:0 auto 14px;
+      text-align:center;
+      color:var(--muted);
+      max-width:640px;
+      line-height:1.35;
+      font-size:14px;
+    }
+    .lockGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      max-width:560px;
+      margin: 0 auto;
+    }
+    .fieldLabel{
+      font-size:13px;
+      color:#374151;
+      font-weight:800;
+      margin: 0 0 6px;
+    }
+    .inp{
+      width:100%;
+      padding:14px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      font-size:16px;
+      outline:none;
+      background:#fff;
+    }
+    .inp:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(59,130,246,.12);
+    }
+    .lockActions{
+      display:flex;
+      justify-content:center;
+      margin-top:10px;
+    }
+    .warn{
+      display:none;
+      margin-top:12px;
+      color:#b91c1c;
+      font-weight:700;
+      font-size:14px;
+      text-align:center;
+    }
+
+    /* ===== QUIZ ===== */
+    .topRow{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      margin-bottom:12px; flex-wrap:wrap;
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--soft);
+      border:1px solid var(--line);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      color:#1f2937;
+    }
+    .chip .icon{ font-size:16px; opacity:.9; }
+
+    .progressWrap{
+      margin: 14px 0 12px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+    .progText{ color:var(--muted); font-weight:700; }
+    .bar{
+      flex:1; min-width:220px;
+      height:10px; background:#e9edf2;
+      border-radius:999px; overflow:hidden;
+      border:1px solid var(--line);
+    }
+    .bar > div{
+      height:100%; width:0%;
+      background: var(--primary);
+      transition: width .2s ease;
+    }
+
+    .support{
+      background: var(--blueSoft);
+      border:1px solid #dbeafe;
+      border-left:6px solid var(--blueLine);
+      border-radius: 14px;
+      padding:14px 14px;
+      margin: 10px 0 16px;
+    }
+    .supportTitle{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; margin-bottom:6px;
+      color:#0f172a; font-size:18px;
+    }
+    .supportText{
+      margin:0;
+      color:#0f172a;
+      font-size:16px;
+      line-height:1.35;
+      white-space:pre-wrap;
+    }
+
+    .qTitle{
+      display:flex; gap:10px; align-items:flex-start;
+      margin: 6px 0 14px;
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2;
+    }
+    .qTitle .brain{ font-size:22px; }
+
+    .opts{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:6px;
+    }
+    .opt{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      padding:16px 14px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      cursor:pointer;
+      transition: background .15s ease, border-color .15s ease, transform .05s ease;
+    }
+    .opt:hover{
+      background:#fcfcfd;
+      border-color:#d1d5db;
+    }
+    .opt:active{ transform: scale(.998); }
+    .opt input{
+      margin-top:6px;
+      transform: scale(1.08);
+      cursor:pointer;
+    }
+    .optText{
+      font-size:20px;
+      line-height:1.28;
+      color:#111827;
+    }
+    .optText strong{ font-weight:900; }
+    .opt.selected{
+      border-color:#bfdbfe;
+      background:#f8fbff;
+    }
+
+    .actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:14px 18px;
+      border-radius:16px;
+      font-size:18px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      transition: background .15s ease, border-color .15s ease, transform .05s ease;
+    }
+    .btn:hover{ background:#e5e7eb; border-color:#d1d5db; }
+    .btn:active{ transform: scale(.998); }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+    .btnPrimary{
+      border:none;
+      background:var(--primary);
+      color:#fff;
+      font-weight:800;
+      padding:14px 18px;
+    }
+    .btnPrimary:hover{ background:var(--primaryHover); }
+
+    .hintBox{
+      display:none;
+      margin-top:14px;
+      border-radius:14px;
+      border:1px dashed #93c5fd;
+      background:#f0f7ff;
+      padding:12px 14px;
+      font-size:16px;
+      color:#0b2a4a;
+      white-space:pre-wrap;
+    }
+    .warnQuiz{
+      display:none;
+      margin-top:12px;
+      color:#b91c1c;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    /* ===== PÁGINA FINAL ===== */
+    .reviewTitle{
+      margin:0 0 6px;
+      font-size:22px;
+      font-weight:900;
+      text-align:center;
+    }
+    .score{
+      display:inline-block;
+      margin:10px auto 0;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:var(--soft);
+      font-size:18px;
+      font-weight:900;
+    }
+    .muted{ color:var(--muted); font-size:14px; text-align:center; margin:8px 0 0; }
+
+    .reviewList{ margin-top:16px; display:flex; flex-direction:column; gap:12px; }
+    .reviewItem{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      padding:14px;
+    }
+    .reviewTop{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--soft);
+      font-size:13px;
+      font-weight:800;
+    }
+    .ok{ border-color:#bbf7d0; background:#f0fdf4; }
+    .no{ border-color:#fecaca; background:#fef2f2; }
+
+    .reviewQ{
+      font-weight:900; margin:0 0 8px; font-size:16px;
+    }
+    .reviewRow{
+      margin:6px 0; font-size:15px; line-height:1.3;
+      white-space:pre-wrap;
+    }
+    .explain{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:#f8fafc;
+      border:1px dashed #cbd5e1;
+      color:#0f172a;
+      font-size:14px;
+      white-space:pre-wrap;
+    }
+
+    @media (max-width:560px){
+      h1{ font-size:22px; }
+      .qTitle{ font-size:19px; }
+      .optText{ font-size:18px; }
+      .btn{ font-size:16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>📘 TEMA 1 – A AGONIA DO IMPÉRIO E O GOLPE REPUBLICANO</h1>
+    </header>
+
+    <!-- ACESSO -->
+    <div class="card" id="lockCard">
+      <h2 class="lockTitle">🔒 Acesso ao quiz</h2>
+      <p class="lockDesc">Digite a senha e o nome completo para iniciar.</p>
+
+      <div class="lockGrid">
+        <div>
+          <div class="fieldLabel">Senha</div>
+          <input class="inp" id="passInput" type="password" placeholder="Senha" autocomplete="off" />
+        </div>
+
+        <div>
+          <div class="fieldLabel">Nome completo</div>
+          <input class="inp" id="nameInput" type="text" placeholder="Ex.: Maria Silva Pereira" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="lockActions">
+        <button class="btn btnPrimary" id="startBtn" type="button">Iniciar</button>
+      </div>
+
+      <div class="warn" id="accessWarn">Verifique a senha e o nome completo.</div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="card hidden" id="quizCard">
+      <div class="topRow">
+        <div class="chip" id="descritorChip"><span class="icon">🧩</span><span>Descritor</span></div>
+        <div class="chip" id="idChip"><span>ID:</span><strong>Q1</strong></div>
+      </div>
+
+      <div class="progressWrap">
+        <div class="progText" id="stepText">Questão 1 de 10</div>
+        <div class="bar" aria-label="Progresso do quiz"><div id="barFill"></div></div>
+      </div>
+
+      <div class="support">
+        <div class="supportTitle"><span>📌</span><span>Texto de Apoio:</span></div>
+        <p class="supportText" id="supportText"></p>
+      </div>
+
+      <div class="qTitle"><span class="brain">🧠</span><span id="promptText"></span></div>
+
+      <div class="opts" id="opts"></div>
+
+      <div class="hintBox" id="hintBox"></div>
+      <div class="warnQuiz" id="warnBox">Selecione uma alternativa para continuar.</div>
+
+      <div class="actions">
+        <button class="btn" id="hintBtn" type="button"><span>💡</span> Dica</button>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="btn" id="backBtn" type="button">⬅ Voltar</button>
+          <button class="btn btnPrimary" id="nextBtn" type="button">Continuar ➜</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL -->
+    <div class="card hidden" id="reviewCard">
+      <h2 class="reviewTitle">📌 Relatório final de aproveitamento</h2>
+
+      <div style="text-align:center;">
+        <div class="score" id="finalStudent">Aluno(a): —</div>
+        <div class="score" id="finalScore" style="display:block; margin-top:10px;">Nota: —</div>
+        <div class="muted" id="finalMsg"></div>
+      </div>
+
+      <div class="reviewList" id="reviewList"></div>
+
+      <div class="actions" style="justify-content:center; margin-top:16px;">
+        <button class="btn btnPrimary" id="savePdfBtn" type="button">📄 Salvar resultado em PDF</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ===== SENHA =====
+  const START_PASSWORD = "cero2026";
+  let studentName = "";
+
+  // ===== QUESTÕES (fidelidade ao enunciado do usuário) =====
+  const questions = [
+    {
+      id: "Questão 1",
+      descritor: "EF09HI01- Contextualizar os aspectos econômicos e políticos da emergência da República",
+      support:
+        "A sustentação política da Monarquia dependia de um pacto com as elites agrárias. Com a assinatura da Lei Áurea em 1888, esse equilíbrio rompeu-se. Diferente de outros processos, a abolição não previu indemnizações aos antigos proprietários. Sentindo-se \"confiscada\", a elite escravocrata do Vale do Paraíba retirou o apoio a D. Pedro II, tornando-se \"republicana de última hora\" por vingança política e prejuízo económico.",
+      prompt: "Com base no texto, a emergência da República foi acelerada pela Questão Abolicionista porque:",
+      options: [
+        { key:"A", text:"Os negros libertos organizaram revoltas armadas para derrubar o Imperador." },
+        { key:"B", text:"A elite agrária sentiu-se prejudicada pela falta de indemnizações após a abolição da escravidão." },
+        { key:"C", text:"O Império decidiu nacionalizar as terras dos fazendeiros para doá-las aos ex-escravizados." },
+        { key:"D", text:"A Igreja Católica exigiu o fim da Monarquia para garantir a liberdade religiosa dos libertos." }
+      ],
+      answer: "B",
+      hint: "Observe a palavra “indemnizações” no texto: qual grupo se sentiu prejudicado e por quê?",
+      explain: "A Lei Áurea aboliu a escravidão sem prever indemnizações aos antigos proprietários, o que levou parte da elite agrária a romper com o Império."
+    },
+    {
+      id: "Questão 2",
+      descritor: "EF09HI01: Descrever o papel dos grupos sociais na transição de regime",
+      support:
+        "O historiador José Murilo de Carvalho destaca que o 15 de novembro foi um movimento de cúpula. Ao presenciar a movimentação das tropas, o jornalista Aristides Lobo afirmou que o povo assistiu a tudo \"bestializado\", acreditando tratar-se de uma parada militar. A República nasceu de um arranjo entre a \"espada\" (militares) e o \"café\" (oligarquias), sem a participação ativa das massas populares.",
+      prompt: "A expressão \"povo bestializado\", utilizada para descrever a Proclamação da República, indica que:",
+      options: [
+        { key:"A", text:"A população participou entusiasticamente da queda da Monarquia." },
+        { key:"B", text:"O regime republicano foi fruto de uma revolução popular democrática." },
+        { key:"C", text:"A transição foi um golpe liderado por elites, sem envolvimento ou compreensão da maioria da população." },
+        { key:"D", text:"O povo foi impedido pelos militares de defender o trono de D. Pedro II." }
+      ],
+      answer: "C",
+      hint: "“Movimento de cúpula” + “arranjo entre espada e café” apontam para ação das elites.",
+      explain: "A expressão sugere que a maioria da população não participou ativamente e nem compreendeu plenamente o que ocorria, pois a mudança foi conduzida por elites."
+    },
+    {
+      id: "Questão 3",
+      descritor: "EF09HI03: Analisar o legado e a herança da escravidão no Brasil atual",
+      support:
+        "Segundo o material \"O Fim do Império\" (p. 171), a abolição foi incompleta, pois não ofereceu condições de cidadania plena aos negros. Essa falha consolidou o racismo estrutural. Os indicadores sociais atuais — renda, escolaridade e moradia — são reflexos de uma República que, em 1889, preferiu manter as hierarquias sociais a integrar os seus novos cidadãos.",
+      prompt: "Segundo o texto, a relação entre a proclamação da República e a situação atual da população negra no Brasil é marcada por:",
+      options: [
+        { key:"A", text:"Uma ruptura total com o passado colonial e a igualdade imediata de direitos." },
+        { key:"B", text:"Permanências históricas que se manifestam na desigualdade social e no preconceito racial." },
+        { key:"C", text:"Políticas públicas eficazes criadas logo em 1889 para acabar com a pobreza." },
+        { key:"D", text:"Uma melhoria rápida nos indicadores de moradia para os afrodescendentes no século XIX." }
+      ],
+      answer: "B",
+      hint: "O texto fala em “abolição incompleta” e “racismo estrutural”: isso aponta para permanências.",
+      explain: "A abolição sem cidadania plena e a manutenção de hierarquias sociais contribuíram para desigualdades e preconceitos que persistem no presente."
+    },
+    {
+      id: "Questão 4",
+      descritor: "GO-EF09HI01-A: Analisar as ideologias (Positivismo) na organização do regime",
+      support:
+        "O Exército Brasileiro era profundamente influenciado pelo Positivismo. Para os oficiais, a Monarquia era um regime atrasado. O lema \"Ordem e Progresso\" resume a convicção de que apenas um Estado forte e técnico, comandado pelos militares como \"tutores da nação\", poderia conduzir o Brasil à modernidade europeia e salvar o país da \"desordem\" política.",
+      prompt: "Sobre a influência do Positivismo na fundação da República, é correto afirmar que os militares:",
+      options: [
+        { key:"A", text:"Defendiam a descentralização do poder e a autonomia total das províncias." },
+        { key:"B", text:"Acreditavam que apenas uma elite técnica e militar poderia garantir o progresso nacional." },
+        { key:"C", text:"Lutavam para que a Igreja Católica tivesse maior poder nas decisões do novo governo." },
+        { key:"D", text:"Queriam manter D. Pedro II como um símbolo decorativo sem poder real." }
+      ],
+      answer: "B",
+      hint: "Repare em “Estado forte e técnico” e “tutores da nação”.",
+      explain: "O positivismo defendia ordem e um Estado forte; no texto, os militares aparecem como elite técnica capaz de conduzir o país ao progresso."
+    },
+    {
+      id: "Questão 5",
+      descritor: "EF09HI02: Caracterizar as práticas de exclusão na República Velha",
+      support:
+        "Na Primeira República, a cidadania era limitada. A Constituição de 1891 proibiu o voto dos analfabetos, excluindo a vasta maioria dos trabalhadores pobres. Nas cidades, as reivindicações eram tratadas como \"caso de polícia\". No campo, o poder era exercido pelos \"Coronéis\" através do voto de cabresto, mantendo a população rural submetida aos mandonismos locais.",
+      prompt: "No início do regime republicano, a exclusão da população pobre (urbana e rural) da vida política foi garantida principalmente por:",
+      options: [
+        { key:"A", text:"Leis que obrigavam todos os cidadãos a viverem apenas nas zonas rurais." },
+        { key:"B", text:"Uma reforma educativa que alfabetizou toda a população em menos de um ano." },
+        { key:"C", text:"Mecanismos como a proibição do voto ao analfabeto e o controle exercido pelo coronelismo." },
+        { key:"D", text:"Um sistema de votação eletrónica que era inacessível para as pessoas mais pobres." }
+      ],
+      answer: "C",
+      hint: "O texto cita explicitamente: voto dos analfabetos (proibido) e voto de cabresto (controle).",
+      explain: "A exclusão ocorreu pela proibição do voto aos analfabetos e pelo controle político do coronelismo (voto de cabresto)."
+    },
+    {
+      id: "Questão 6",
+      descritor: "EF09HI01: Identificar os aspetos culturais e ideológicos da emergência da República",
+      support:
+        "O Positivismo, corrente filosófica que influenciou os militares brasileiros, defendia que a sociedade deveria ser organizada de forma científica. Para os positivistas, a Monarquia era um regime ultrapassado, baseado em tradições religiosas, enquanto a República representaria o \"Estado Científico\". O lema \"Ordem e Progresso\" na bandeira nacional reflete a crença de que, sem ordem política e autoridade forte, o desenvolvimento económico e social do Brasil seria impossível.",
+      prompt: "Com base no pensamento positivista descrito no texto, a principal função do Exército na Proclamação da República era:",
+      options: [
+        { key:"A", text:"Garantir que a Igreja Católica continuasse a controlar as decisões do Estado." },
+        { key:"B", text:"Atuar como um agente modernizador, capaz de impor a ordem necessária ao progresso do país." },
+        { key:"C", text:"Defender o direito de voto para todos os cidadãos, independentemente da escolaridade." },
+        { key:"D", text:"Restabelecer o poder de D. Pedro II para que ele conduzisse as reformas científicas." }
+      ],
+      answer: "B",
+      hint: "No texto, “Ordem e Progresso” liga autoridade forte a modernização e desenvolvimento.",
+      explain: "O positivismo atribui ao Exército um papel de tutela/ordenação da sociedade para viabilizar o progresso (ordem como condição do desenvolvimento)."
+    },
+    {
+      id: "Questão 7",
+      descritor: "EF09HI01: Analisar os conflitos políticos entre a Monarquia e outras instituições",
+      support:
+        "A Questão Religiosa foi um dos marcos da crise imperial. D. Pedro II utilizava o direito de \"Padroado\", que lhe permitia intervir em decisões da Igreja. O conflito atingiu o auge quando o Papa proibiu a permanência de maçons em irmandades religiosas e o Imperador, sendo maçom, não aceitou a ordem, chegando a prender bispos. Esse evento rompeu o apoio do clero, que passou a ver na República uma forma de separar a Igreja do Estado, ganhando autonomia.",
+      prompt: "A Questão Religiosa contribuiu para a queda da Monarquia pois:",
+      options: [
+        { key:"A", text:"Provocou a expulsão de todos os padres do território brasileiro pelos militares." },
+        { key:"B", text:"Fez com que a Igreja Católica passasse a apoiar o Imperador contra os maçons." },
+        { key:"C", text:"Retirou uma das bases de sustentação moral do regime, isolando politicamente D. Pedro II." },
+        { key:"D", text:"Obrigou o Imperador a converter-se ao protestantismo para manter o trono." }
+      ],
+      answer: "C",
+      hint: "O texto diz que o evento “rompeu o apoio do clero” e isolou o regime.",
+      explain: "Ao romper com o clero, o Império perdeu apoio moral e político importante, aumentando o isolamento de D. Pedro II."
+    },
+    {
+      id: "Questão 8",
+      descritor: "EF09HI03: Discutir as estratégias de inserção dos negros na sociedade pós-abolição",
+      support:
+        "Para reverter a marginalização no início da República, os libertos e seus descendentes criaram a chamada \"Imprensa Negra\". Jornais publicados por negros e para negros tratavam de temas como racismo, habitação e educação. Como aponta o texto complementar do manual (p. 50), essas associações e jornais eram \"tribunas privilegiadas\" para pensar soluções concretas para o problema do preconceito na sociedade brasileira.",
+      prompt: "De acordo com o texto, a criação da Imprensa Negra no alvorecer da República demonstra que:",
+      options: [
+        { key:"A", text:"O Estado Republicano ofereceu apoio financeiro para que os ex-escravizados estudassem." },
+        { key:"B", text:"A população negra organizou-se autonomamente para combater a exclusão social e o racismo." },
+        { key:"C", text:"O racismo deixou de existir no Brasil imediatamente após a Proclamação da República." },
+        { key:"D", text:"Os jornais da época defendiam o retorno da Monarquia como solução para os negros." }
+      ],
+      answer: "B",
+      hint: "O texto enfatiza a organização de jornais e associações por iniciativa dos próprios negros.",
+      explain: "A Imprensa Negra evidencia organização autônoma para denunciar racismo e discutir soluções (educação, habitação e cidadania)."
+    },
+    {
+      id: "Questão 9",
+      descritor: "EF09HI02: Caracterizar a organização política da Primeira República",
+      support:
+        "A nova Constituição de 1891 instituiu o Federalismo, garantindo maior autonomia para os estados (antigas províncias). Na prática, isso permitiu que as elites regionais, como as de São Paulo e Minas Gerais, controlassem a política nacional. Esse sistema ficou conhecido como \"Política dos Governadores\", onde o governo federal apoiava as oligarquias locais em troca de apoio político no Congresso, consolidando o poder dos grandes latifundiários.",
+      prompt: "O sistema federalista adotado pela República Brasileira em 1891 favoreceu:",
+      options: [
+        { key:"A", text:"O fortalecimento do poder central do Presidente em detrimento dos governadores." },
+        { key:"B", text:"A democratização do voto, permitindo que camponeses pobres chegassem ao poder." },
+        { key:"C", text:"O domínio político das oligarquias estaduais, que ganharam liberdade para gerir os seus próprios interesses." },
+        { key:"D", text:"A extinção do poder dos coronéis no interior do país." }
+      ],
+      answer: "C",
+      hint: "Autonomia estadual + acordos políticos = fortalecimento das elites regionais (oligarquias).",
+      explain: "A autonomia dos estados e os pactos da Política dos Governadores consolidaram o domínio das oligarquias estaduais."
+    },
+    {
+      id: "Questão 10",
+      descritor: "EF09HI01 / GO-EF09HI01-A: Analisar transformações económicas e sociais",
+      support:
+        "O PDF \"O Fim do Império\" salienta que a urbanização facilitou a circulação de ideias republicanas, pois nas cidades cresciam grupos que viam na Monarquia um símbolo de um país agrário e atrasado. Contudo, essa modernização urbana era excludente. O crescimento das cidades gerou novos problemas sociais, como a falta de habitação digna para os pobres, revelando que o progresso republicano não atingia todas as camadas da sociedade de forma igualitária.",
+      prompt: "Com base no texto, a urbanização no final do século XIX influenciou a política brasileira ao:",
+      options: [
+        { key:"A", text:"Fortalecer o apoio popular ao Imperador D. Pedro II nas grandes cidades." },
+        { key:"B", text:"Criar um ambiente propício para a difusão de ideais republicanos e de modernização." },
+        { key:"C", text:"Eliminar completamente as desigualdades sociais entre ricos e pobres nos centros urbanos." },
+        { key:"D", text:"Proibir a imigração europeia para garantir empregos aos ex-escravizados." }
+      ],
+      answer: "B",
+      hint: "O texto destaca que a urbanização “facilitou a circulação de ideias republicanas”.",
+      explain: "O crescimento urbano ampliou a circulação de ideias republicanas e de modernização, mesmo com uma modernização excludente."
+    }
+  ];
+
+  // ===== ELEMENTOS =====
+  const lockCard = document.getElementById("lockCard");
+  const passInput = document.getElementById("passInput");
+  const nameInput = document.getElementById("nameInput");
+  const startBtn = document.getElementById("startBtn");
+  const accessWarn = document.getElementById("accessWarn");
+
+  const quizCard = document.getElementById("quizCard");
+  const reviewCard = document.getElementById("reviewCard");
+
+  const descritorChip = document.getElementById("descritorChip");
+  const idChip = document.getElementById("idChip");
+  const stepText = document.getElementById("stepText");
+  const barFill = document.getElementById("barFill");
+  const supportText = document.getElementById("supportText");
+  const promptText = document.getElementById("promptText");
+  const opts = document.getElementById("opts");
+
+  const hintBtn = document.getElementById("hintBtn");
+  const hintBox = document.getElementById("hintBox");
+  const warnBox = document.getElementById("warnBox");
+
+  const backBtn = document.getElementById("backBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  const finalStudent = document.getElementById("finalStudent");
+  const finalScore = document.getElementById("finalScore");
+  const finalMsg = document.getElementById("finalMsg");
+  const reviewList = document.getElementById("reviewList");
+  const savePdfBtn = document.getElementById("savePdfBtn");
+
+  // ===== ESTADO =====
+  let idx = 0;
+  const chosen = {}; // {"Questão 1":"A", ...}
+
+  function normalizeSpaces(s){
+    return (s || "").trim().replace(/\s+/g, " ");
+  }
+
+  function looksLikeFullName(s){
+    // Critério simples: pelo menos 2 palavras com 2+ letras
+    const parts = normalizeSpaces(s).split(" ").filter(Boolean);
+    if (parts.length < 2) return false;
+    return parts.every(p => p.length >= 2);
+  }
+
+  function startQuiz(){
+    const typedPass = normalizeSpaces(passInput.value);
+    const typedName = normalizeSpaces(nameInput.value);
+
+    const passOk = typedPass === START_PASSWORD;
+    const nameOk = looksLikeFullName(typedName);
+
+    if (!passOk || !nameOk){
+      accessWarn.style.display = "block";
+      if (!passOk) { passInput.focus(); passInput.select(); }
+      else { nameInput.focus(); nameInput.select(); }
+      return;
+    }
+
+    studentName = typedName;
+    accessWarn.style.display = "none";
+    lockCard.classList.add("hidden");
+    quizCard.classList.remove("hidden");
+    render();
+  }
+
+  function render(){
+    const q = questions[idx];
+
+    descritorChip.innerHTML = `<span class="icon">🧩</span><span>${escapeHtml(q.descritor)}</span>`;
+    idChip.innerHTML = `<span>ID:</span><strong>${escapeHtml(q.id)}</strong>`;
+
+    stepText.textContent = `${q.id} — ${idx+1} de ${questions.length}`;
+    barFill.style.width = `${(idx / questions.length) * 100}%`;
+
+    supportText.textContent = q.support;
+    promptText.textContent = q.prompt;
+
+    hintBox.style.display = "none";
+    hintBox.textContent = `Dica: ${q.hint}`;
+    warnBox.style.display = "none";
+
+    opts.innerHTML = "";
+
+    q.options.forEach((opt) => {
+      const label = document.createElement("label");
+      label.className = "opt";
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "opt";
+      input.value = opt.key;
+      input.checked = (chosen[q.id] === opt.key);
+
+      const span = document.createElement("div");
+      span.className = "optText";
+      span.innerHTML = `<strong>${opt.key})</strong> ${escapeHtml(opt.text)}`;
+
+      label.appendChild(input);
+      label.appendChild(span);
+
+      if (input.checked) label.classList.add("selected");
+
+      label.addEventListener("click", () => {
+        chosen[q.id] = opt.key;
+        document.querySelectorAll(".opt").forEach(el => el.classList.remove("selected"));
+        label.classList.add("selected");
+        warnBox.style.display = "none";
+      });
+
+      opts.appendChild(label);
+    });
+
+    backBtn.disabled = (idx === 0);
+    nextBtn.textContent = (idx === questions.length - 1) ? "Finalizar ✅" : "Continuar ➜";
+  }
+
+  function toggleHint(){
+    hintBox.style.display = (hintBox.style.display === "block") ? "none" : "block";
+  }
+
+  function goNext(){
+    const q = questions[idx];
+    if (!chosen[q.id]) {
+      warnBox.style.display = "block";
+      return;
+    }
+    if (idx === questions.length - 1) finishAndReview();
+    else { idx++; render(); }
+  }
+
+  function goBack(){
+    if (idx > 0) { idx--; render(); }
+  }
+
+  function finishAndReview(){
+    barFill.style.width = "100%";
+
+    let correct = 0;
+    questions.forEach(q => { if (chosen[q.id] === q.answer) correct++; });
+
+    const total = questions.length;
+    const pct = Math.round((correct / total) * 100);
+    const grade = (correct / total * 10).toFixed(1);
+
+    quizCard.classList.add("hidden");
+    reviewCard.classList.remove("hidden");
+
+    finalStudent.textContent = `Aluno(a): ${studentName}`;
+    finalScore.textContent = `Nota: ${grade} / 10 — ${correct} de ${total} acertos (${pct}%)`;
+
+    let msg = "";
+    if (pct >= 90) msg = "Excelente aproveitamento.";
+    else if (pct >= 70) msg = "Bom aproveitamento.";
+    else if (pct >= 50) msg = "Aproveitamento regular: revise os textos de apoio.";
+    else msg = "Aproveitamento baixo: retome os textos e refaça o estudo do tema.";
+    finalMsg.textContent = msg;
+
+    reviewList.innerHTML = "";
+    questions.forEach((q, i) => {
+      const user = chosen[q.id];
+      const ok = (user === q.answer);
+
+      const userText = user ? `${user}) ${q.options.find(o => o.key === user)?.text || ""}` : "—";
+      const correctText = `${q.answer}) ${q.options.find(o => o.key === q.answer)?.text || ""}`;
+
+      const item = document.createElement("div");
+      item.className = "reviewItem";
+      item.innerHTML = `
+        <div class="reviewTop">
+          <div class="badge">${escapeHtml(q.id)}</div>
+          <div class="badge ${ok ? "ok" : "no"}">${ok ? "✅ Correto" : "❌ Incorreto"}</div>
+        </div>
+        <p class="reviewQ">${i+1}. ${escapeHtml(q.prompt)}</p>
+        <div class="reviewRow"><strong>Texto de Apoio:</strong>\n${escapeHtml(q.support)}</div>
+        <div class="reviewRow"><strong>Sua resposta:</strong> ${escapeHtml(userText)}</div>
+        <div class="reviewRow"><strong>Resposta correta:</strong> ${escapeHtml(correctText)}</div>
+        <div class="explain"><strong>Explicação:</strong> ${escapeHtml(q.explain)}</div>
+      `;
+      reviewList.appendChild(item);
+    });
+  }
+
+  // ===== PDF (com nome + nota + revisão) =====
+  function saveResultAsPDF(){
+    if (reviewCard.classList.contains("hidden")) return;
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 12;
+    const maxWidth = pageWidth - margin * 2;
+    let y = 14;
+
+    const now = new Date();
+    const ts = now.toLocaleString("pt-BR");
+
+    let correct = 0;
+    questions.forEach(q => { if (chosen[q.id] === q.answer) correct++; });
+    const total = questions.length;
+    const pct = Math.round((correct / total) * 100);
+    const grade = (correct / total * 10).toFixed(1);
+
+    function addLine(text, size=11, bold=false, spacing=6){
+      doc.setFont("helvetica", bold ? "bold" : "normal");
+      doc.setFontSize(size);
+
+      const lines = doc.splitTextToSize(String(text), maxWidth);
+      for (const ln of lines) {
+        if (y > 285) { doc.addPage(); y = 14; }
+        doc.text(ln, margin, y);
+        y += spacing;
+      }
+    }
+
+    addLine("TEMA 1 – A AGONIA DO IMPÉRIO E O GOLPE REPUBLICANO", 14, true, 7);
+    addLine(`Aluno(a): ${studentName}`, 12, true, 7);
+    addLine(`Data/Hora: ${ts}`, 10, false, 6);
+    addLine(`Nota: ${grade}/10 — ${correct} de ${total} acertos (${pct}%)`, 11, true, 8);
+
+    y += 2;
+    doc.setDrawColor(200);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 8;
+
+    addLine("REVISÃO (respostas e explicações)", 12, true, 7);
+    y += 2;
+
+    questions.forEach((q, i) => {
+      const user = chosen[q.id] || "—";
+      const userOpt = q.options.find(o => o.key === user);
+      const correctOpt = q.options.find(o => o.key === q.answer);
+      const ok = (user === q.answer);
+
+      addLine(`${i+1}) ${q.id}`, 11, true, 6);
+      addLine(`Descritor: ${q.descritor}`, 10, false, 5);
+      addLine(`Texto de Apoio: ${q.support}`, 10, false, 5);
+      addLine(`Enunciado: ${q.prompt}`, 10, false, 5);
+      addLine(`Sua resposta: ${user === "—" ? "—" : `${user}) ${userOpt?.text || ""}`}`, 10, false, 5);
+      addLine(`Resposta correta: ${q.answer}) ${correctOpt?.text || ""}`, 10, false, 5);
+      addLine(`Status: ${ok ? "CORRETO" : "INCORRETO"}`, 10, true, 6);
+      addLine(`Explicação: ${q.explain}`, 10, false, 6);
+
+      y += 3;
+      doc.setDrawColor(220);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 8;
+    });
+
+    const safeName = studentName
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "")
+      .slice(0, 40) || "aluno";
+
+    const fname = `resultado_${safeName}_tema1_${now.toISOString().slice(0,10)}.pdf`;
+    doc.save(fname);
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // Eventos
+  startBtn.addEventListener("click", startQuiz);
+  passInput.addEventListener("keydown", (e) => { if (e.key === "Enter") startQuiz(); });
+  nameInput.addEventListener("keydown", (e) => { if (e.key === "Enter") startQuiz(); });
+
+  hintBtn.addEventListener("click", toggleHint);
+  nextBtn.addEventListener("click", goNext);
+  backBtn.addEventListener("click", goBack);
+  savePdfBtn.addEventListener("click", saveResultAsPDF);
+</script>
+</body>
+</html>
