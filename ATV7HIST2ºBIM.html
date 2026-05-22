@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esquema-Resumo Interativo — A Crise de 1929 e o New Deal</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root {
+    --vermelho-escuro: #a93226;
+    --laranja: #e67e22;
+    --azul-escuro: #1b4f72;
+    --azul-claro: #2e86c1;
+    --verde: #196f3d;
+    --verde-claro: #27ae60;
+    --fundo: #e5e8e8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--fundo);
+    min-height: 100vh;
+    padding: 20px;
+    user-select: none;
+  }
+
+  /* TELA INICIAL */
+  #tela-inicial {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--azul-escuro), var(--vermelho-escuro));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+  }
+
+  .card-inicial {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  }
+
+  .card-inicial input {
+    width: 100%;
+    padding: 12px;
+    margin: 20px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    text-align: center;
+  }
+
+  .btn-iniciar {
+    background: var(--azul-claro);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+    transition: background 0.2s;
+  }
+  .btn-iniciar:hover { background: var(--azul-escuro); }
+
+  /* LAYOUT PRINCIPAL */
+  #app { display: none; }
+  #app.ativo { display: block; }
+
+  .cabecalho {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+
+  /* ABA DE TEXTO DE REFERÊNCIA */
+  .aba-referencia {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+
+  .aba-gatilho {
+    background: #f4f6f7;
+    padding: 12px 25px;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .aba-conteudo {
+    padding: 20px 25px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: block; /* Visível por padrão para leitura inicial */
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: #444;
+  }
+  
+  .aba-conteudo h4 {
+    margin: 12px 0 4px 0;
+    color: var(--vermelho-escuro);
+  }
+  .aba-conteudo h4.azul {
+    color: var(--azul-escuro);
+  }
+  .aba-conteudo p.sub {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 10px;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .painel-opcoes {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 20px;
+  }
+
+  .painel-opcoes h3 {
+    margin-bottom: 15px;
+    color: var(--azul-escuro);
+    border-bottom: 2px solid var(--laranja);
+    padding-bottom: 5px;
+  }
+
+  .opcoes-lista {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 5px;
+  }
+
+  .opcao {
+    padding: 12px;
+    border: 2px solid var(--laranja);
+    border-radius: 6px;
+    cursor: grab;
+    font-size: 0.85em;
+    margin-bottom: 10px;
+    background: #fff;
+    font-weight: 600;
+    color: #333;
+    transition: transform 0.2s, background-color 0.2s;
+    touch-action: none;
+  }
+
+  .opcao:hover { background: #fef5ed; transform: translateX(2px); }
+  .opcao.arrastando { opacity: 0.4; background: #eee; }
+
+  /* ÁREA DO MAPA */
+  .painel-esquema {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: auto;
+  }
+
+  .esquema {
+    position: relative;
+    width: 950px;
+    height: 850px;
+    background: white;
+    margin: 0 auto;
+  }
+
+  /* CONTAINER DA IMAGEM CENTRAL FIXA */
+  .container-imagem-central {
+    position: absolute;
+    left: 275px;   
+    top: 140px;    
+    width: 400px;  
+    height: 520px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;    
+    pointer-events: none; 
+  }
+
+  .container-imagem-central img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    opacity: 0.16; 
+    filter: grayscale(100%); 
+  }
+
+  #svg-setas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .bloco {
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    z-index: 2;
+    font-size: 0.85em;
+    line-height: 1.3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+
+  .titulo-principal {
+    font-weight: bold;
+    border: 3px solid var(--azul-escuro);
+    color: var(--azul-escuro);
+    font-size: 1.15em;
+    background: #f4f6f7;
+  }
+
+  .titulo-secao {
+    font-weight: bold;
+    background: var(--vermelho-escuro);
+    color: white;
+    border: 2px solid #5c1a13;
+  }
+
+  .titulo-secao.azul {
+    background: var(--azul-escuro);
+    border-color: #0b2536;
+  }
+
+  .slot {
+    font-weight: 600;
+    border: 2px dashed #ccc;
+    color: #999;
+    background: #fafafa;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .slot.tipo-v { border-color: var(--laranja); color: #a93226; }
+  .slot.tipo-a { border-color: var(--azul-claro); color: #1b4f72; }
+  .slot.tipo-g { border-color: var(--verde-claro); color: #196f3d; }
+
+  .slot.drag-over {
+    background: #e8f4f8;
+    border-color: var(--azul-claro);
+    transform: scale(1.02);
+  }
+
+  .slot.preenchido {
+    border-style: solid;
+    color: white !important;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    animation: encaixe 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .slot.preenchido.tipo-v { background: var(--vermelho-escuro); border-color: #5c1a13; }
+  .slot.preenchido.tipo-a { background: var(--azul-escuro); border-color: #0b2536; }
+  .slot.preenchido.tipo-g { background: var(--verde); border-color: #114d2a; }
+
+  @keyframes encaixe { from { transform: scale(0.8); opacity: 0.7; } to { transform: scale(1); opacity: 1; } }
+
+  .progresso { margin: 15px 0; height: 12px; background: #eee; border-radius: 6px; overflow: hidden; }
+  .progresso-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--laranja), var(--verde-claro)); transition: width 0.3s; }
+
+  .btn-finalizar {
+    background: var(--verde);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+    width: 100%;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+
+  .carimbo { position: absolute; bottom: 15px; left: 15px; font-size: 0.8em; color: #555; font-weight: bold; display: none; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<div id="tela-inicial">
+  <div class="card-inicial">
+    <h1>Crise de 1929 e New Deal</h1>
+    <p>Organize a sequência histórica arrastando as caixas para os lugares corretos.</p>
+    <input type="text" id="nome-aluno" placeholder="Digite seu nome completo...">
+    <button class="btn-iniciar" onclick="iniciar()">Iniciar Atividade</button>
+  </div>
+</div>
+
+<div id="app">
+  <div class="cabecalho">
+    <h2>História - Mapa Conceitual Prático</h2>
+    <div>Aluno(a): <strong id="display-nome"></strong></div>
+  </div>
+
+  <div class="aba-referencia">
+    <div class="aba-gatilho" onclick="alternarAba()">
+      <span>📖 A CRISE DE 1929 E O NEW DEAL</span>
+      <span id="aba-seta">▲ Clique para recolher</span>
+    </div>
+    <div class="aba-conteudo" id="aba-conteudo">
+      <p class="sub"></p>
+      
+      <h4>A Ilusão da Prosperidade e as Desigualdades (Anos 1920):</h4>
+      <p>Após a Primeira Guerra Mundial, os Estados Unidos vivenciaram um grande crescimento industrial, impulsionado por novos métodos de trabalho (taylorismo e fordismo) e por uma cultura de consumo a crédito. Contudo, essa riqueza era mal distribuída: os lucros das empresas cresciam muito mais rápido que os salários dos operários, e havia forte repressão contra trabalhadores, negros e imigrantes.</p>
+      
+      <h4>A Crise de Superprodução:</h4>
+      <p>Ao longo da década de 1920, as fábricas estadunidenses passaram a produzir mais bens do que a sociedade conseguia consumir, visto que os salários baixos limitavam o poder de compra dos trabalhadores.</p>
+      
+      <h4>O "Crash" de 1929:</h4>
+      <p>A febre especulativa fez com que as ações na Bolsa de Nova York subissem de forma artificial. Em outubro de 1929, o mercado entrou em pânico, as ações despencaram e fortunas desapareceram, provocando a falência de bancos e empresas, além de deixar cerca de 15 milhões de desempregados nos EUA.</p>
+      
+      <h4>Impacto Global (A Grande Depressão):</h4>
+      <p>A crise se espalhou pelo mundo, arruinando as economias da Europa (como a Alemanha) e da América Latina, que dependia da exportação de matérias-primas (como o café no Brasil). Isso revelou o esgotamento da doutrina do liberalismo econômico (laissez-faire), que defendia a não intervenção do Estado.</p>
+      
+      <h4 class="azul">O New Deal:</h4>
+      <p>Em 1932, o presidente eleito Franklin Delano Roosevelt rompeu com o liberalismo e implementou o New Deal ("novo pacto"). Tratava-se de um amplo conjunto de medidas em que o Estado passou a intervir diretamente na economia para estabilizar os bancos e gerar empregos através de grandes obras públicas.</p>
+      
+      <h4 class="azul">Novos Direitos Sociais:</h4>
+      <p>O programa regulamentou as relações de trabalho e garantiu direitos até então inexistentes no país, como jornada de 40 hours semanais, salário mínimo, aposentadoria e seguro por invalidez (Lei de Previdência Social). O New Deal também incentivou a cultura contratando artistas e construindo museus.</p>
+      
+      <h4 class="azul">A Superação Definitiva:</h4>
+      <p>Embora o New Deal tenha estabilizado o capitalismo, a superação definitiva da Grande Depressão ocorreu apenas com a entrada dos EUA na Segunda Guerra Mundial em 1941, quando a necessidade extrema de produção de armamentos gerou empregos em escala máxima.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="painel-opcoes">
+      <h3>Elementos para arrastar</h3>
+      <div class="opcoes-lista" id="lista"></div>
+      <div class="progresso"><div class="progresso-bar" id="bar"></div></div>
+      <button class="btn-finalizar" id="btn-f" onclick="salvar()">📸 Salvar Resultado</button>
+    </div>
+
+    <div class="painel-esquema">
+      <div class="esquema" id="mapa">
+        
+        <div class="container-imagem-central">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Lange-MigrantMother02.jpg" alt="Mãe Migrante - Dorothea Lange" crossorigin="anonymous">
+        </div>
+
+        <svg id="svg-setas">
+          <defs>
+            <marker id="seta" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 Z" fill="#333" />
+            </marker>
+          </defs>
+          
+          <path d="M150,110 L150,140" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M150,220 L150,250" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M150,330 L150,360" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M150,440 L150,470" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M150,550 L150,580" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          
+          <path d="M800,110 L800,140" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M800,220 L800,250" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M800,330 L800,360" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M800,440 L800,470" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+
+          <path d="M150,660 L150,730 L370,730" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+          <path d="M800,550 L800,730 L580,730" stroke="#333" stroke-width="2" fill="none" marker-end="url(#seta)" />
+        </svg>
+
+        <div class="bloco titulo-principal" style="left:350px; top:10px; width:250px; height:80px;">A CRISE DE 1929 E O NEW DEAL</div>
+
+        <div class="bloco titulo-secao" style="left:30px; top:50px; width:240px; height:60px;">CRISE DA SUPERPRODUÇÃO E ESPECULAÇÃO</div>
+        <div class="bloco slot tipo-v" id="s1" style="left:50px; top:140px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-v" id="s2" style="left:50px; top:250px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-v" id="s3" style="left:50px; top:360px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-v" id="s4" style="left:50px; top:470px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-v" id="s5" style="left:50px; top:580px; width:200px; height:80px;">Arraste para cá</div>
+
+        <div class="bloco titulo-secao azul" style="left:680px; top:50px; width:240px; height:60px;">O NEW DEAL (RESPOSTA DO ESTADO)</div>
+        <div class="bloco slot tipo-a" id="s6" style="left:700px; top:140px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-a" id="s7" style="left:700px; top:250px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-a" id="s8" style="left:700px; top:360px; width:200px; height:80px;">Arraste para cá</div>
+        <div class="bloco slot tipo-a" id="s9" style="left:700px; top:470px; width:200px; height:80px;">Arraste para cá</div>
+
+        <div class="bloco slot tipo-g" id="s10" style="left:375px; top:690px; width:200px; height:80px;">Arraste para cá</div>
+        
+        <div id="carimbo" class="carimbo"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const dados = [
+    {id:'s1', t:'Anos 1920: Crescimento industrial, Fordismo e consumo a crédito.'},
+    {id:'s2', t:'Superprodução: Fábricas produzem mais do que o povo consegue comprar.'},
+    {id:'s3', t:'Crash de 1929: Queda artificial das ações na Bolsa de Nova York.'},
+    {id:'s4', t:'Grande Depressão: 15 milhões de desempregados e falência de bancos.'},
+    {id:'s5', t:'Efeito Global: Arruinou economias da Europa e o Café no Brasil.'},
+    {id:'s6', t:'Franklin Roosevelt: Eleito em 1932 para romper com o liberalismo puro.'},
+    {id:'s7', t:'Intervenção: Estado investe em grandes obras para gerar empregos.'},
+    {id:'s8', t:'Direitos Sociais: Salário mínimo, jornada de 40h e Previdência Social.'},
+    {id:'s9', t:'Incentivo à Cultura: Contratação de artistas e construção de museus.'},
+    {id:'s10', t:'Superação Final: Ocorre em 1941 com a entrada na 2ª Guerra Mundial.'}
+  ];
+
+  let preenchidos = 0;
+  let elementoArrastadoAtual = null;
+
+  function iniciar() {
+    const nome = document.getElementById('nome-aluno').value.trim();
+    if(!nome) return alert("Por favor, digite seu nome para iniciar!");
+    document.getElementById('display-nome').innerText = nome;
+    document.getElementById('tela-inicial').style.display = 'none';
+    document.getElementById('app').classList.add('ativo');
+    renderLista();
+    configurarEventosDragDrop();
+  }
+
+  function alternarAba() {
+    const conteudo = document.getElementById('aba-conteudo');
+    const seta = document.getElementById('aba-seta');
+    if (conteudo.style.display === 'none') {
+      conteudo.style.display = 'block';
+      seta.innerText = '▲ Clique para recolher';
+    } else {
+      conteudo.style.display = 'none';
+      seta.innerText = '▼ Clique para expandir e ler';
+    }
+  }
+
+  function renderLista() {
+    const lista = document.getElementById('lista');
+    lista.innerHTML = '';
+    [...dados].sort(() => Math.random() - 0.5).forEach(item => {
+      const d = document.createElement('div');
+      d.className = 'opcao';
+      d.innerText = item.t;
+      d.draggable = true;
+      d.dataset.id = item.id;
+      lista.appendChild(d);
+    });
+  }
+
+  function configurarEventosDragDrop() {
+    document.querySelectorAll('.opcao').forEach(opcao => {
+      opcao.addEventListener('dragstart', e => {
+        elementoArrastadoAtual = opcao;
+        e.dataTransfer.setData('text/plain', opcao.dataset.id);
+        opcao.classList.add('arrastando');
+      });
+
+      opcao.addEventListener('dragend', () => {
+        opcao.classList.remove('arrastando');
+        elementoArrastadoAtual = null;
+      });
+
+      opcao.addEventListener('click', () => {
+        document.querySelectorAll('.opcao').forEach(o => o.style.backgroundColor = '#fff');
+        opcao.style.backgroundColor = '#e8f4f8';
+        elementoArrastadoAtual = opcao;
+      });
+    });
+
+    document.querySelectorAll('.slot').forEach(slot => {
+      slot.addEventListener('dragover', e => {
+        e.preventDefault();
+        if (!slot.classList.contains('preenchido')) {
+          slot.classList.add('drag-over');
+        }
+      });
+
+      slot.addEventListener('dragleave', () => {
+        slot.classList.remove('drag-over');
+      });
+
+      slot.addEventListener('drop', e => {
+        e.preventDefault();
+        slot.classList.remove('drag-over');
+        
+        const idDropado = e.dataTransfer.getData('text/plain') || (elementoArrastadoAtual ? elementoArrastadoAtual.dataset.id : null);
+        
+        if(idDropado === slot.id) {
+          const itemDados = dados.find(x => x.id === slot.id);
+          slot.innerText = itemDados.t;
+          slot.classList.add('preenchido');
+          
+          const elementoLista = document.querySelector(`[data-id="${slot.id}"]`);
+          if (elementoLista) elementoLista.remove();
+          
+          preenchidos++;
+          atualizarProgresso();
+        } else if (idDropado) {
+          alert("Item incorreto para este local do esquema! Tente analisar a ordem cronológica.");
+        }
+      });
+
+      slot.addEventListener('click', () => {
+        if (elementoArrastadoAtual && elementoArrastadoAtual.dataset.id === slot.id) {
+          slot.innerText = dados.find(x => x.id === slot.id).t;
+          slot.classList.add('preenchido');
+          elementoArrastadoAtual.remove();
+          elementoArrastadoAtual = null;
+          preenchidos++;
+          atualizarProgresso();
+        } else if (elementoArrastadoAtual && !slot.classList.contains('preenchido')) {
+          alert("Item incorreto para este local do esquema!");
+        }
+      });
+    });
+  }
+
+  function atualizarProgresso() {
+    const pct = (preenchidos / dados.length) * 100;
+    document.getElementById('bar').style.width = pct + '%';
+    if(preenchidos === dados.length) {
+      document.getElementById('btn-f').style.display = 'block';
+    }
+  }
+
+  function salvar() {
+    const mapa = document.getElementById('mapa');
+    const c = document.getElementById('carimbo');
+    const data = new Date().toLocaleString('pt-BR');
+    
+    c.innerText = `Concluído por: ${document.getElementById('display-nome').innerText} | Em: ${data}`;
+    c.style.display = 'block';
+    
+    setTimeout(() => {
+      html2canvas(mapa, { 
+        scale: 2, 
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        allowTaint: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Atividade_Concluida_1929_${document.getElementById('display-nome').innerText.replace(/\s+/g, '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        c.style.display = 'none';
+      });
+    }, 100);
+  }
+</script>
+</body>
+</html>
