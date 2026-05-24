@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry e a Crise de 1929 – Atividade Interativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --parchment: #ede5d0;
+    --brown-dark: #2c1a0e;
+    --brown-mid: #6b3a1f;
+    --brown-light: #a0714f;
+    --gold: #c9962a;
+    --gold-light: #e8c56a;
+    --red-vintage: #8b2020;
+    --green-vintage: #2a5c3f;
+    --ink: #1a0f07;
+    --shadow: rgba(44, 26, 14, 0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--brown-dark);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px);
+    font-family: 'Source Serif 4', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 30px 16px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 820px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .header .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--brown-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 18px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+  }
+  .header h1 span { color: var(--gold-light); }
+  .header .subtitle {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--brown-light);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 18px 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .divider-icon { color: var(--gold); font-size: 1.1rem; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--cream);
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(201,150,42,0.25);
+    overflow: hidden;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  /* ── SCREEN ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── NAME SCREEN ── */
+  .name-screen {
+    padding: 48px 52px;
+    background: linear-gradient(160deg, var(--cream) 60%, var(--parchment));
+    text-align: center;
+  }
+  .name-screen .newspaper-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    color: var(--brown-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .name-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    color: var(--brown-dark);
+    margin-bottom: 8px;
+  }
+  .name-screen p {
+    color: var(--brown-mid);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+  .name-screen label {
+    display: block;
+    text-align: left;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brown-mid);
+    margin-bottom: 8px;
+  }
+  .name-screen input[type="text"] {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--parchment);
+    border-bottom: 2px solid var(--gold);
+    background: #fff;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    border-radius: 3px 3px 0 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .name-screen input[type="text"]:focus { border-bottom-color: var(--brown-dark); }
+  .btn-primary {
+    margin-top: 28px;
+    display: inline-block;
+    padding: 15px 44px;
+    background: var(--brown-dark);
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  .btn-primary:hover {
+    background: var(--brown-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  /* ── ACTIVITY SCREEN ── */
+  .activity-screen { padding: 0; }
+
+  .story-header {
+    background: var(--brown-dark);
+    padding: 28px 52px 24px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .story-header .meta {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 10px;
+  }
+  .story-header .meta span {
+    font-size: 0.76rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold-light);
+  }
+  .story-header .meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+  .story-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.85rem;
+    color: var(--cream);
+  }
+
+  .story-body {
+    padding: 36px 52px 28px;
+    border-bottom: 1px solid var(--parchment);
+    background: linear-gradient(180deg, #fdfaf4, var(--cream));
+    position: relative;
+  }
+  .story-body::before {
+    content: '\201C';
+    position: absolute; top: 18px; left: 38px;
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem; color: var(--parchment);
+    line-height: 1; pointer-events: none;
+  }
+  .story-body p {
+    font-size: 0.98rem;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 0.9em;
+    position: relative; z-index: 1;
+  }
+  .story-body .year-mark {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--brown-dark);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 2px 9px;
+    border-radius: 2px;
+    margin-right: 6px;
+    letter-spacing: 0.05em;
+  }
+  .story-body .crisis {
+    background: var(--red-vintage);
+    color: #fff;
+    padding: 14px 20px;
+    border-left: 4px solid var(--gold);
+    border-radius: 0 3px 3px 0;
+    margin-top: 14px;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  /* ── QUESTIONS ── */
+  .questions-section {
+    padding: 36px 52px 44px;
+    background: var(--cream);
+  }
+  .questions-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--brown-dark);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 10px;
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .questions-section h3 .icon { font-size: 1.1rem; }
+
+  .question-block {
+    margin-bottom: 30px;
+    padding: 22px 26px;
+    background: #fff;
+    border: 1px solid #e0d8c8;
+    border-left: 4px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .question-block:hover { box-shadow: 0 4px 16px var(--shadow); }
+  .question-block .q-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .question-block .q-text {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--brown-dark);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .question-block textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px 14px;
+    border: 1px solid #d8cdb8;
+    border-radius: 3px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: #fdfaf6;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    line-height: 1.7;
+  }
+  .question-block textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,150,42,0.12);
+  }
+  .question-block textarea::placeholder { color: #b8a98a; font-style: italic; }
+
+  .student-info-bar {
+    background: var(--parchment);
+    padding: 14px 52px;
+    border-top: 1px solid #d8cdb8;
+    border-bottom: 1px solid #d8cdb8;
+    font-size: 0.85rem;
+    color: var(--brown-mid);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .student-info-bar strong { color: var(--brown-dark); }
+
+  .submit-area {
+    padding: 24px 52px 36px;
+    text-align: center;
+    background: var(--cream);
+  }
+  .btn-submit {
+    padding: 16px 56px;
+    background: var(--green-vintage);
+    color: #e8f5ee;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(42,92,63,0.35);
+    letter-spacing: 0.04em;
+  }
+  .btn-submit:hover {
+    background: #1e4530;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(42,92,63,0.45);
+  }
+
+  /* ── RESULTS SCREEN ── */
+  .results-screen { padding: 0; }
+
+  .results-header {
+    background: var(--brown-dark);
+    padding: 28px 52px 22px;
+    border-bottom: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .results-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    color: var(--cream);
+  }
+  .results-header .student-badge {
+    background: var(--gold);
+    color: var(--brown-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 2px;
+  }
+
+  .results-body { padding: 36px 52px 44px; }
+
+  .result-block {
+    margin-bottom: 34px;
+    border: 1px solid #d8cdb8;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+  .result-block .rb-q {
+    background: var(--brown-dark);
+    color: var(--cream);
+    padding: 12px 22px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .result-block .rb-q .num {
+    background: var(--gold);
+    color: var(--brown-dark);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .result-block .rb-student {
+    padding: 16px 22px;
+    background: #fffdf7;
+    border-bottom: 1px dashed #d8cdb8;
+  }
+  .result-block .rb-student .label {
+    font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--brown-light); margin-bottom: 5px;
+  }
+  .result-block .rb-student p {
+    font-size: 0.95rem; color: var(--ink);
+    line-height: 1.7; white-space: pre-wrap;
+  }
+  .result-block .rb-expected {
+    padding: 16px 22px;
+    background: #f0f7f3;
+  }
+  .result-block .rb-expected .label {
+    font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green-vintage); margin-bottom: 5px;
+  }
+  .result-block .rb-expected p {
+    font-size: 0.95rem; color: #1a3326;
+    line-height: 1.7;
+  }
+
+  .save-area {
+    text-align: center;
+    padding: 10px 52px 40px;
+  }
+  .btn-save {
+    padding: 15px 48px;
+    background: var(--gold);
+    color: var(--brown-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(201,150,42,0.4);
+    letter-spacing: 0.04em;
+  }
+  .btn-save:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(201,150,42,0.5);
+  }
+  .save-note {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--brown-light);
+    font-style: italic;
+  }
+
+  .results-student-bar {
+    background: var(--gold);
+    padding: 13px 52px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 3px solid var(--brown-dark);
+  }
+  .results-student-bar .rsb-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown-dark);
+    opacity: 0.75;
+  }
+  .results-student-bar .rsb-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--brown-dark);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── PRINT TARGET ── */
+  #print-target { background: var(--cream); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .name-screen, .story-header, .story-body, .questions-section,
+    .student-info-bar, .submit-area, .results-header, .results-body, .save-area {
+      padding-left: 22px; padding-right: 22px;
+    }
+    .story-body::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">9º Ano · Cidadãos do Futuro: Meu Dinheiro Minhas Escolhas (ANEXO 3A)</div>
+    <h1>Henry e a <span>Crise de 1929</span></h1>
+    <p class="subtitle">Consumo e endividamento: duas faces de uma mesma moeda?</p>
+    <div class="divider"><span class="divider-icon">◆</span></div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card" id="main-card">
+
+    <!-- TELA 1: NOME -->
+    <div class="screen active" id="screen-name">
+      <div class="name-screen">
+        <div class="newspaper-date">Educação Financeira · Ensino Fundamental</div>
+        <h2>Bem-vindo(a) à atividade!</h2>
+        <p>Antes de começar, informe seu nome completo.<br>Você lerá um texto sobre Henry, um trabalhador dos anos 1920, e responderá 5 questões dissertativas.</p>
+        <label for="student-name">Seu nome completo</label>
+        <input type="text" id="student-name" placeholder="Digite aqui seu nome completo..." autocomplete="off">
+        <br>
+        <button class="btn-primary" onclick="startActivity()">Iniciar Atividade →</button>
+      </div>
+    </div>
+
+    <!-- TELA 2: TEXTO + QUESTÕES -->
+    <div class="screen" id="screen-activity">
+
+      <div class="story-header">
+        <div class="meta">
+          <span>Estudo de Caso</span><div class="dot"></div>
+          <span>Nova York · 1921–1929</span><div class="dot"></div>
+          <span>Educação Financeira · Ensino Fundamental</span>
+        </div>
+        <h2>Henry e a Crise de 1929</h2>
+      </div>
+
+      <div class="story-body">
+        <p>Henry é um trabalhador da indústria, desde 1921. Quando conseguiu o seu primeiro salário, a primeira coisa que fez foi sair para comemorar com os amigos.</p>
+        <p>Ele, um jovem de família pobre, não imaginou que conseguiria frequentar as melhores pizzarias da cidade de Nova York, onde alugou um apartamento em uma rua movimentada, cheia de lojas de roupa e demais comércios.</p>
+        <p>Henry evidentemente começou a sair para festejar com os amigos sempre que podia, afinal, agora tinha seu próprio dinheiro. Fazia questão de comprar todo mês uma roupa daquela conhecida loja de produtos sofisticados que seus amigos indicaram.</p>
+        <p>Tênis, sim, tênis! Se tinha uma coisa que Henry fazia questão de colecionar eram os tênis que via em vitrines de lojas que confeccionavam os melhores pares de tênis que toda Nova Iorque já vira.</p>
+        <p>Não é que o salário mudou até o paladar de Henry? Pois é, nada de margarina, agora ele consome manteiga, daquelas deliciosas. E os bifes? Imagina aquele bife grande, suculento, macio... pensou? Então, era esse que Henry fazia questão de comprar cerca de 2 vezes por semana, afinal, sempre que podia ele colocava um desses na panela.</p>
+        <p><span class="year-mark">1923</span> Segue Henry com o mesmo estilo de vida. Nesse ano, inclusive, ele resolveu comprar um carro, desses produzidos pela fábrica de seu xará, Henry Ford. Claro, com seu salário não era possível chegar e comprar, mas bastou chegar ao banco que Henry conseguiu o dinheiro emprestado para adquirir seu carro. Sim, ele precisaria pagar, mas tudo bem, tinha o seu salário.</p>
+        <p><span class="year-mark">1924</span> Henry continuava recebendo o mesmo salário. Seguia feliz! Viu um cartaz na entrada do shopping mostrando um rádio novo. Ele achou o máximo! Sim, claro que ele comprou aquela belezinha para ele.</p>
+        <p><span class="year-mark">1925</span> Henry, conversando com o seu melhor amigo, disse que havia algo estranho, pois naquele mês sobrou metade do que costumava sobrar do seu salário. Para ele não fazia sentido, afinal, continuava recebendo o mesmo montante. Por que sobrou tão pouco?</p>
+        <p>Ele se fez essa pergunta outras vezes ao longo de 1925, porque continuava sobrando menos. No ano seguinte, <span class="year-mark">1926</span>, as coisas pareciam ainda mais estranhas. Henry chegou a dizer que seu salário não parecia mais o mesmo, mas não fazia sentido, ganhava o mesmo valor de sempre, desde 1921. Não mudou em nada os seus hábitos, inclusive, nem comprou ainda um relógio bonito que viu outro dia. Era melhor nem comprar, pensou ele.</p>
+        <p><span class="year-mark">1927</span> As coisas estão estranhas. Muito, muito estranhas.</p>
+        <div class="crisis">🗞 1929. Crise. Caos. Henry agora não tinha mais o seu salário. Alguma coisa aconteceu e ele não tinha mais seu emprego. Não era só ele, pelo que soube, mas tantos outros.</div>
+      </div>
+
+      <div class="student-info-bar">
+        📝 Aluno(a): <strong id="display-name-bar">—</strong>
+      </div>
+
+      <div class="questions-section">
+        <h3><span class="icon">💬</span> Questões para Discussão</h3>
+
+        <div class="question-block">
+          <div class="q-number">Questão 1</div>
+          <div class="q-text">Nesse texto, o que foi acontecendo com Henry ao longo do tempo?</div>
+          <textarea id="q1" placeholder="Escreva sua resposta aqui..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <div class="q-number">Questão 2</div>
+          <div class="q-text">Por que, mesmo ganhando o salário e mantendo o consumo, Henry começou a ter problemas com seu salário?</div>
+          <textarea id="q2" placeholder="Escreva sua resposta aqui..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <div class="q-number">Questão 3</div>
+          <div class="q-text">Você agora é Henry, no ano de 1927. Como você administraria o seu dinheiro? O que Henry precisa fazer? Liste 5 atitudes que você tomaria.</div>
+          <textarea id="q3" placeholder="Liste as 5 atitudes aqui..." style="min-height: 130px;"></textarea>
+        </div>
+
+        <div class="question-block">
+          <div class="q-number">Questão 4</div>
+          <div class="q-text">Como essas atitudes poderiam interferir no planejamento do uso de recursos financeiros?</div>
+          <textarea id="q4" placeholder="Escreva sua resposta aqui..."></textarea>
+        </div>
+
+        <div class="question-block">
+          <div class="q-number">Questão 5</div>
+          <div class="q-text">Essas atitudes teriam alguma relação com o tema do consumo? Se sim, qual seria?</div>
+          <textarea id="q5" placeholder="Escreva sua resposta aqui..."></textarea>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button class="btn-submit" onclick="submitAnswers()">✔ Enviar Respostas</button>
+      </div>
+
+    </div><!-- /screen-activity -->
+
+    <!-- TELA 3: RESULTADOS -->
+    <div class="screen" id="screen-results">
+      <div id="print-target">
+
+        <div class="results-header">
+          <h2>📋 Respostas & Gabarito</h2>
+          <div class="student-badge" id="result-name-badge">Aluno(a)</div>
+        </div>
+        <div class="results-student-bar" id="results-student-bar">
+          <span class="rsb-label">Aluno(a):</span>
+          <span class="rsb-name" id="results-student-name">—</span>
+        </div>
+
+        <div class="results-body" id="results-body">
+          <!-- gerado dinamicamente -->
+        </div>
+
+      </div><!-- /print-target -->
+
+      <div class="save-area">
+        <button class="btn-save" onclick="saveAsImage()">💾 Salvar Atividade como Imagem</button>
+        <div class="save-note">A imagem será baixada automaticamente no seu dispositivo.</div>
+      </div>
+
+    </div><!-- /screen-results -->
+
+  </div><!-- /card -->
+</div><!-- /container -->
+
+<script>
+  const EXPECTED = [
+    {
+      q: "Nesse texto, o que foi acontecendo com Henry ao longo do tempo?",
+      a: "Henry começou como trabalhador industrial em 1921 e, ao receber seu primeiro salário, adotou um estilo de vida de alto consumo: saídas frequentes, roupas de lojas sofisticadas, coleção de tênis, alimentação cara e bens financiados (carro em 1923, rádio em 1924). Com o tempo, mesmo mantendo o mesmo salário e os mesmos hábitos, Henry percebeu que sobrava cada vez menos dinheiro — sinal de endividamento crescente. Em 1929, com a crise econômica e o desemprego em massa, ele perdeu seu emprego e ficou sem renda, não tendo como arcar com as dívidas acumuladas."
+    },
+    {
+      q: "Por que, mesmo ganhando o salário e mantendo o consumo, Henry começou a ter problemas com seu salário?",
+      a: "Porque Henry contraiu dívidas (especialmente o financiamento do carro) sem considerar que as parcelas consumiriam parte do salário mensalmente. Mesmo sem mudar seus hábitos de consumo, o dinheiro disponível foi diminuindo à medida que as prestações e juros passaram a ser descontados. Isso ilustra o conceito de comprometimento de renda: quando se financia um bem, parte do salário futuro já está comprometida antes mesmo de ser recebida."
+    },
+    {
+      q: "Você agora é Henry, no ano de 1927. Como você administraria o seu dinheiro? O que Henry precisa fazer? Liste 5 atitudes que você tomaria.",
+      a: "Respostas possíveis incluem: (1) Fazer um levantamento detalhado de todas as dívidas e parcelas em aberto; (2) Elaborar um orçamento mensal, separando gastos essenciais (moradia, alimentação) de gastos supérfluos; (3) Reduzir ou eliminar gastos desnecessários, como roupas de lojas caras e saídas frequentes; (4) Quitar as dívidas priorizando as de maior juros; (5) Criar uma reserva de emergência para imprevistos como perda de emprego; (6) Evitar novos financiamentos ou parcelamentos enquanto as dívidas não estiverem sob controle."
+    },
+    {
+      q: "Como essas atitudes poderiam interferir no planejamento do uso de recursos financeiros?",
+      a: "Essas atitudes permitem ter uma visão clara de quanto se ganha, quanto se gasta e quanto sobra (ou falta). Com um planejamento financeiro bem estruturado, é possível tomar decisões mais conscientes sobre o que consumir e quando, evitar o endividamento excessivo, preparar-se para situações de crise (como desemprego) e alcançar metas financeiras de médio e longo prazo. O planejamento é, portanto, a base para um consumo saudável e sustentável."
+    },
+    {
+      q: "Essas atitudes teriam alguma relação com o tema do consumo? Se sim, qual seria?",
+      a: "Sim. As atitudes de educação financeira estão diretamente relacionadas ao consumo consciente. Consumir sem planejamento leva ao endividamento, como ocorreu com Henry. Quando se tem controle das finanças, o consumo passa a ser feito de forma consciente: distinguindo necessidades de desejos, avaliando o real custo das compras a prazo (incluindo juros) e priorizando o que é realmente essencial. Assim, consumo e planejamento financeiro são temas inseparáveis na construção de uma vida financeira equilibrada."
+    }
+  ];
+
+  let studentName = '';
+
+  function startActivity() {
+    const nameInput = document.getElementById('student-name').value.trim();
+    if (!nameInput) {
+      alert('Por favor, informe seu nome completo antes de continuar.');
+      return;
+    }
+    studentName = nameInput;
+    document.getElementById('display-name-bar').textContent = studentName;
+    showScreen('screen-activity');
+  }
+
+  function submitAnswers() {
+    const answers = [
+      document.getElementById('q1').value.trim(),
+      document.getElementById('q2').value.trim(),
+      document.getElementById('q3').value.trim(),
+      document.getElementById('q4').value.trim(),
+      document.getElementById('q5').value.trim(),
+    ];
+    const empty = answers.findIndex(a => !a);
+    if (empty !== -1) {
+      alert(`Por favor, responda a Questão ${empty + 1} antes de enviar.`);
+      return;
+    }
+
+    document.getElementById('result-name-badge').textContent = studentName;
+    document.getElementById('results-student-name').textContent = studentName;
+
+    const body = document.getElementById('results-body');
+    body.innerHTML = '';
+
+    EXPECTED.forEach((item, i) => {
+      const block = document.createElement('div');
+      block.className = 'result-block';
+      block.innerHTML = `
+        <div class="rb-q">
+          <span class="num">Q${i+1}</span>
+          <span>${item.q}</span>
+        </div>
+        <div class="rb-student">
+          <div class="label">✏️ Sua resposta</div>
+          <p>${escHtml(answers[i])}</p>
+        </div>
+        <div class="rb-expected">
+          <div class="label">✅ Resposta esperada</div>
+          <p>${escHtml(item.a)}</p>
+        </div>
+      `;
+      body.appendChild(block);
+    });
+
+    showScreen('screen-results');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function escHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  function saveAsImage() {
+    const target = document.getElementById('print-target');
+    const btn = document.querySelector('.btn-save');
+    btn.textContent = '⏳ Gerando imagem...';
+    btn.disabled = true;
+    html2canvas(target, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#f5f0e8',
+      logging: false
+    }).then(canvas => {
+      const link = document.createElement('a');
+      const safeName = studentName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_áéíóúÁÉÍÓÚãõÃÕâêîôûçÇ]/g, '');
+      link.download = `Henry_Crise1929_${safeName}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      btn.textContent = '💾 Salvar Atividade como Imagem';
+      btn.disabled = false;
+    }).catch(() => {
+      alert('Não foi possível gerar a imagem. Tente novamente.');
+      btn.textContent = '💾 Salvar Atividade como Imagem';
+      btn.disabled = false;
+    });
+  }
+</script>
+</body>
+</html>
