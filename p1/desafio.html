@@ -379,7 +379,7 @@
                     </div>
 
                     <h1 class="font-rpg-title text-2xl sm:text-4xl font-black text-[#701c0c] mt-4 mb-1">SOBERANO DA HISTÓRIA</h1>
-                    <p class="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-gray-600 mb-5">Certificado de Superação nos Desafios da Era Vargas e Goiás</p>
+                    <p class="text-[10px] uppercase tracking-widest font-bold text-gray-600 mb-5">Certificado de Superação nos Desafios da Era Vargas e Goiás</p>
                     
                     <div class="border-t-2 border-b-2 border-[#5a3d28] py-5 my-5">
                         <p class="text-sm sm:text-base font-semibold">Certificamos com louvor que o intrépido pensador(a)</p>
@@ -499,7 +499,6 @@
 
     <!-- CORE GAME LOGIC SCRIPT -->
     <script>
-        // Banco de Dados de Batalhas Conceituais (5 questões extremamente rígidas por oponente)
         const bossDatabase = {
             1: {
                 name: "Otto von Bismarck (Chanceler de Ferro)",
@@ -516,7 +515,7 @@
                 name: "General Erich von Falkenhayn",
                 quote: "A guerra de desgaste drenará o sangue de suas nações! Seus blocos defensivos falharão ante meu poder militar!",
                 questions: [
-                    { q: "O estopim imediato que desencadeou a ativação do sistema de alianças militares e culminou na Primeira Guerra Mundial foi:", options: ["O naufrágio do navio de passageiros Lusitânia por submarinos alemães no Atlântico Norte.", "O assassinato do arquiduque Francisco Ferdinando, herdeiro austro-húngaro, em Sarajevo por um nacionalista sérvio.", "A invasão da Polônia pelas tropas czaristas em represália ao Tratado de Versalhes.", "A assinatura unilateral da aliança secreta franco-italiana de apoio à expansão no norte da África."], answer: 1 },
+                    { q: "O estopim imediato que desencadeou a ativação do sistema de alianças militares e culminou na Primeira Guerra Mundial foi:", options: ["O naufrágio do navio de passageiros Lusitânia por submarinos alemães no Atlântico Norte.", "O assassinato do arquiduque Francisco Ferdinando, herdeiro austro-húngaro, em Sarajevo por um nacionalista sérvio.", "A invasão da Polônia pelas tropas czaristas em represália ao Tratado de Versalhes.", "A assinatura unilateral da aliança secreta franco-italiana de apoio à expansion no norte da África."], answer: 1 },
                     { q: "A fase mais longa e devastadora da Primeira Guerra Mundial (1915-1918) ficou caracterizada como:", options: ["Guerra de Movimento, marcada por avanços rápidos de tropas terrestres utilizando táticas napoleônicas.", "Guerra de Trincheiras ou Posições, marcada por imobilismo militar, alto custo de vidas e uso de metralhadoras e gases tóxicos.", "Blitzkrieg, baseada no uso combinado e veloz de colunas de tanques blindados e bombardeios aéreos massivos.", "Guerra de Guerrilha urbana, travada principalmente nos centros industriais das grandes metrópoles europeias."], answer: 1 },
                     { q: "Qual foi o impacto histórico imediato da assinatura do Tratado de Brest-Litovsk em 1918?", options: ["A rendição incondicional da Alemanha perante as forças da Tríplice Entente.", "A saída formal da Rússia da guerra, cedendo amplos territórios do leste europeu para o Império Alemão.", "A entrada oficial dos Estados Unidos no conflito ao lado das potências da Tríplice Aliança.", "A desintegração total do Império Austro-Húngaro em diversas repúblicas independentes e democráticas."], answer: 1 },
                     { q: "Que fator geopolítico e diplomático motivou a entrada dos Estados Unidos na Primeira Guerra Mundial em 1917?", options: ["O bombardeio direto da base aérea de Pearl Harbor pela marinha imperial japonesa.", "A guerra submarina irrestrita da Alemanha que ameaçava o comércio norte-americano e o interceptado Telegrama Zimmermann.", "O desejo de assegurar o controle das rotas comerciais do Canal de Suez e o livre comércio na China.", "O tratado de assistência militar mútua assinado preventivamente com o Império Russo absolutista."], answer: 1 },
@@ -536,13 +535,13 @@
             },
             4: {
                 name: "Herbert Hoover (Chanceler do Laissez-Faire)",
-                quote: "A economia se autorregula! O 'Crash' é passageiro. Suas propostas de intervenção estatal arruinarão o livre mercado!",
+                quote: "A economy se autorregula! O 'Crash' é passageiro. Suas propostas de intervenção estatal arruinarão o livre mercado!",
                 questions: [
                     { q: "O 'Crash' da Bolsa de Nova York em outubro de 1929 foi o ápice de um desequilíbrio estrutural da economia americana caracterizado por:", options: ["Escassez generalizada de manufaturas e inflação galopante induzida por gastos públicos de guerra descontrolados.", "Superprodução industrial e agrícola combinada com forte especulação financeira fundada em crédito fácil desmedido.", "Nacionalização das indústrias de base pelo governo federal, afugentando capitais privados internacionais.", "Invasão de produtos industrializados europeus baratos decorrente da redução unilateral de tarifas alfandegárias."], answer: 1 },
                     { q: "A teoria econômica que fundamentou as reformas do New Deal, propondo que o Estado intervenvesse na economia para garantir emprego e consumo em momentos de crise, é conhecida como:", options: ["Liberalismo ortodoxo clássico de Adam Smith e David Ricardo.", "Fisiocracia agrária baseada na terra como única fonte real de valor comercial.", "Keynesianismo, formulada pelo economista britânico John Maynard Keynes.", "Socialismo científico centralizado e planificado nos moldes soviéticos."], answer: 2 },
-                    { q: "Qual foi uma das principais medidas adotadas pelo New Deal sob o governo de Franklin D. Roosevelt para mitigar o desemprego massivo nos EUA?", options: ["O fechamento das indústrias mecânicas pesadas para priorizar o retorno das populações ao campo de forma espontânea.", "A criação de um vasto programa of obras públicas estatais, como represas e estradas, gerando postos de trabalho de grande escala.", "A privatização completa do sistema bancário para estimular novos investimentos e linhas de crédito desregulamentadas.", "O confisco compulsório de depósitos inativos para pagamento de juros de títulos públicos federais vencidos."], answer: 1 },
+                    { q: "Qual foi uma das principais medidas adotadas pelo New Deal sob o governo de Franklin D. Roosevelt para mitigar o desemprego massivo nos EUA?", options: ["O fechamento das indústrias mecânicas pesadas para priorizar o retorno das populações ao campo de forma espontânea.", "A criação de um vasto programa de obras públicas estatais, como represas e estradas, gerando postos de trabalho de grande escala.", "A privatização completa do sistema bancário para estimular novos investimentos e linhas de crédito desregulamentadas.", "O confisco compulsório de depósitos inativos para pagamento de juros de títulos públicos federais vencidos."], answer: 1 },
                     { q: "O que estabelecia a Lei de Ajustamento Agrícola (AAA), um dos pilares de recuperação rural do New Deal?", options: ["A estatização das propriedades agrícolas e a criação de cooperativas camponesas gerenciadas pelo exército federal.", "O subsídio a fazendeiros para reduzir voluntariamente suas áreas de cultivo e rebanhos, elevando artificialmente os preços das commodities.", "A importação massiva de grãos asiáticos para baratear a alimentação das populações urbanas desempregadas.", "A proibição do uso de maquinário industrial nos campos de forma a empregar mais operários agrícolas braçais."], answer: 1 },
-                    { q: "Qual o impacto global imediato da Grande Depressão de 1929 fora das fronteiras dos Estados Unidos?", options: ["A rápida industrialização da América Latina financiada com capitais repatriados dos bancos norte-americanos.", "A retração severa do comércio internacional devido ao protecionismo de tarifas adotado pelos EUA e o colapso de economias exportadoras pelo mundo.", "A pacificação das disputas territoriais europeias graças à unificação dos mercados financeiros sob a Liga das Nações.", "O fortalecimento imediato das democracias liberais europeias que provaram imunidade às instabilidades especulativas do mercado."], answer: 1 }
+                    { q: "Qual o impacto global imediato da Grande Depressão de 1929 fora das fronteiras dos Estados Unidos?", options: ["A rápida industrialização da América Latina financiada com capitais repatriados dos bancos norte-americanos.", "A retração severa do comércio internacional devido ao protecionismo de tarifas adotado pelos EUA e o colapso de economias exportadoras pelo mundo.", "A pacificação das disputas territoriais europeias graças à unificação dos mercados financeiros sob a Liga das Nações.", "O fortalecimento imediato das democracies liberais europeias que provaram imunidade às instabilidades especulativas do mercado."], answer: 1 }
                 ]
             },
             5: {
@@ -562,8 +561,8 @@
                 questions: [
                     { q: "O projeto de construção de Goiânia, liderado pelo interventor Pedro Ludovico Teixeira na década de 1930, teve como motivação geopolítica estratégica:", options: ["Transferir o centro de decisões de Goiás de uma região de forte controle das velhas oligarquias tradicionais agrárias (Goiás Velho) para um polo dinâmico e integrado.", "Garantir o isolamento territorial definitivo de Goiás face aos movimentos migratórios vindos de São Paulo e Minas Gerais.", "Construir uma base militar fortificada para resistir a possíveis invasões de tropas revolucionárias gaúchas de oposição a Vargas.", "Priorizar a proximidade geográfica com as minas de ouro e diamantes recém-descobertas nas serras ao norte do estado."], answer: 0 },
                     { q: "Como a política federal de Vargas conhecida como 'Marcha para o Oeste' influenciou o desenvolvimento socioeconômico de Goiás?", options: ["Isolou o território goiano economicamente ao priorizar exclusivamente a industrialização litorânea do Sudeste.", "Estimulou a ocupação agrícola planejada, a modernização da infraestrutura e a integração rodoferroviária do centro goiano com o sul do país.", "Causou a estagnação populacional devido ao êxodo forçado de lavradores para frentes de colonização na selva amazônica.", "Substituiu a pecuária extensiva pela mineração em larga escala operada por empresas privadas norte-americanas autorizadas pelo governo."], answer: 1 },
-                    { q: "O interventor Pedro Ludovico Teixeira foi peça-chave na consolidação do varguismo em Goiás. Sua nomeação pelo governo central tinha o objetivo explícito de:", options: ["Combater o power secular das velhas oligarquias agrárias ligadas ao coronelismo regional liderado pela família Caiado.", "Promover a secessão territorial de Goiás para fundar uma república autônoma aliada aos latifundiários paulistas.", "Transferir as ricas indústrias farmacêuticas goianas para o Rio de Janeiro sob controle de Vargas.", "Criar uma milícia armada independente das forças armadas regulares para pacificar as divisas com o Tocantins."], answer: 0 },
-                    { q: "Qual cidade goiana, fundada como colônia agrícola nacional planejada no contexto da 'Marcha para o Oeste', tornou-se um grande polo de produção agrária e industrial no século XX?", options: ["Ceres, estabelecida na próspera região do Vale de São Patrício.", "Pirenópolis, reestruturada exclusivamente para o refino de prata colonial exportada para a Europa.", "Catalão, planejada inicialmente para sediar o maior polo siderúrgico de base do Centro-Oeste brasileiro.", "Formosa, fundada pelo governo federal como barreira de segurança sanitária contra epidemias agrárias tropicais."], answer: 0 },
+                    { q: "O interventor Pedro Ludovico Teixeira foi peça-chave na consolidação do varguismo em Goiás. Sua nomeação pelo governo central tinha o objetivo explícito de:", options: ["Combater o poder secular das velhas oligarquias agrárias ligadas ao coronelismo regional liderado pela família Caiado.", "Promover a secessão territorial de Goiás para fundar uma república autônoma aliada aos latifundiários paulistas.", "Transferir as ricas indústrias farmacêuticas goianas para o Rio de Janeiro sob controle de Vargas.", "Criar uma milícia armada independente das forças armadas regulares para pacificar as divisas com o Tocantins."], answer: 0 },
+                    { q: "Qual cidade goiana, fundada como colônia agrícola nacional planejada no contexto da 'Marcha para o Oeste', tornou-se um grande polo de produção agrária e industrial no século XX?", options: ["Ceres, estabelecida na próspera região do Vale de São Patrício.", "Pirenópolis, reestruturada exclusivamente para o refino de prata colonial exportada para a Europa.", "Catalão, planejada inicialmente para sediar o maior polo Siderúrgico de base do Centro-Oeste brasileiro.", "Formosa, fundada pelo governo federal como barreira de segurança sanitária contra epidemias agrárias tropicais."], answer: 0 },
                     { q: "A transferência oficial da capital do estado de Goiás Velho para a recém-construída Goiânia, na década de 1930, representou simbolicamente:", options: ["A vitória cultural e política das elites latifundiárias tradicionais agrárias e a preservação do estilo de vida colonial jesuítico.", "O triunfo da modernização planejada, da divisão da velha oligarquia e do progresso urbano integrado ao Brasil Central.", "O declínio do comércio agropecuário estadual que foi transferido compulsoriamente para o porto de Santos.", "A descontinuidade dos programas de saúde e educação rurais que dependiam da antiga infraestrutura colonial."], answer: 1 }
                 ]
             },
@@ -572,10 +571,10 @@
                 quote: "Tolo historiador! O espaço e o tempo entraram em colapso completo! Seus conceitos serão desintegrados no meu labirinto do caos!",
                 questions: [
                     { q: "Qual a grande diferença teórica e metodológica da historiografia contemporânea sobre a Revolução de 1930 em comparação com a narrativa oficial do Estado Novo?", options: ["A contemporânea aborda o movimento como um arranjo de conciliação de elites de classe dissidentes, e não como uma revolução popular pura de massas operárias.", "A contemporânea defende que o café paulista não tinha qualquer importância na composição de poder da República Velha.", "A narrativa oficial afirmava que Getúlio Vargas foi coroado Imperador com apoio militar e financeiro das colônias africanas.", "A contemporânea rejeita o uso de documentos escritos para analisar a década de 1930, priorizando lendas orais."], answer: 0 },
-                    { q: "Sob a perspectiva geopolítica da 'Marcha para o Oeste', a interiorização do desenvolvimento brasileiro visava resolver qual desequilíbrio geográfico nacional?", options: ["A hipertrofia econômica e demográfica do litoral atlântico e o correspondente isolamento agrário de vastas fronteiras interiores vazias.", "A dependência absoluta das importações de carvão mineral vindas do sul do continente africano.", "O excesso de população urbana concentrada nas províncias do norte de Goiás.", "A necessidade de escoar a produção aurífera de Goiânia para portos comerciais na Amazônia."], answer: 0 },
+                    { q: "Sob a perspectiva geopolítica da 'Marcha para o Oeste', a interiorização do desenvolvimento brasileiro visava resolver qual desequilíbrio geográfico nacional?", options: ["A hipertrofia econômica e demográfica do litoral atlântico e o correspondente isolamento agrário de vastas fronteiras interiores vazias.", "A dependência absoluta das importações de carvão mineral vindas do sul do continente africano.", "O excesso de population urbana concentrada nas províncias do norte de Goiás.", "A necessidade de escoar a produção aurífera de Goiânia para portos comerciais na Amazônia."], answer: 0 },
                     { q: "O 'Tratado de Versalhes' e a 'Conferência de Berlim' assemelham-se em qual princípio de atuação das potências imperialistas européias?", options: ["Ambos ignoraram totalmente o princípio de autodeterminação dos povos locais para impor redesenhos arbitrários de fronteiras geopolíticas.", "Ambos garantiram a participação democrática e o direito de voto das lideranças tradicionais da África e Ásia.", "Ambos determinaram o fechamento compulsório de todas as indústrias bélicas e navais dos Estados Unidos.", "Ambos foram mediados pela Liga das Nações com o objetivo de abolir a escravidão mercantil."], answer: 0 },
-                    { q: "A crise de superprodução de 1929 revealed, em escala internacional, a falibilidade de qual postulado econômico clássico do século XIX?", options: ["O Laissez-Faire, a teoria da autorregulação espontânea dos mercados livres sem intervenção reguladora estatal.", "O Mercantilismo protecionista comandado por monarquias absolutistas de direito divino.", "O Socialismo científico planificado de controle operário corporativo.", "A Fisiocracia agrária, que considerava o comércio urbano como atividade improdutiva e parasita."], answer: 0 },
-                    { q: "Como a mudança da capital de Goiás Velho para Goiânia na década de 1930 refletiu, na política regional, o discurso de modernização e centralização do governo varguista?", options: ["Funcionou como uma demonstração material do enfraquecimento do coronelismo oligárquico agrário em favor de uma burocracia técnico-administrativa estatal.", "Visava consagrar a influência das ricas ordens religiosas católicas coloniais instaladas no cerrado goiano.", "Garantia a preservação das estruturas econômicas coloniais baseadas no plantio exclusive da cana-de-açúcar.", "Buscava afastar as forças militares estaduais da fronteira com o Distrito Federal do Rio de Janeiro."], answer: 0 }
+                    { q: "A crise de superprodução de 1929 revelou, em escala internacional, a falibilidade de qual postulado econômico clássico do século XIX?", options: ["O Laissez-Faire, a teoria da autorregulação espontânea dos mercados livres sem intervenção reguladora estatal.", "O Mercantilismo protecionista comandado por monarquias absolutistas de direito divino.", "O Socialismo científico planificado de controle operário corporativo.", "A Fisiocracia agrária, que considerava o comércio urbano como atividade improdutiva e parasita."], answer: 0 },
+                    { q: "Como a mudança da capital de Goiás Velho para Goiânia na década de 1930 refletiu, na política regional, o discurso de modernização e centralização do governo varguista?", options: ["Funcionou como uma demonstração material do enfraquecimento do coronelismo oligárquico agrário em favor de uma burocracia técnico-administrativa estatal.", "Visava consagrar a influência das ricas ordens religiosas católicas coloniais instaladas no cerrado goiano.", "Garantia a preservação das estruturas econômicas coloniais baseadas no plantio exclusivo da cana-de-açúcar.", "Buscava afastar as forças militares estaduais da fronteira com o Distrito Federal do Rio de Janeiro."], answer: 0 }
                 ]
             }
         };
@@ -589,31 +588,29 @@
             lives: 3,
             maxLives: 3,
             currentPhase: 1,
-            unlockedPhase: 7, // ALTERADO: Força o desbloqueio visual de todas as frentes estruturais
-            completedPhases: [], // Permite registrar as fases superadas em qualquer ordem
+            completedPhases: [], 
             bossHP: 100,
             playerHP: 100,
             currentBossQuestionIndex: 0,
             canvasGameActive: false,
-            canvasInterval: null,
             phase2_categorized: [],
-            speedMultiplier: 1.0, // Controlado pela classe do jogador
-            combatDamageMultiplier: 1.0, // Controlado pela classe do jogador
-            touchSelectedCountry: null // Para o suporte híbrido de drag-and-drop no toque
+            speedMultiplier: 1.0, 
+            combatDamageMultiplier: 1.0, 
+            touchSelectedCountry: null 
         };
 
-        // Função para Alerta customizado (Eliminação completa de alert e confirm)
+        let activeAnimationId = null;
+        let activeKeydownHandler = null;
+        let activeKeyupHandler = null;
+
+        // Função para Alerta customizado
         function showCustomAlert(title, message, callback) {
             const modal = document.getElementById('custom-modal');
-            const mTitle = document.getElementById('modal-title');
-            const mText = document.getElementById('modal-text');
-            const mBtn = document.getElementById('modal-btn');
-            
-            mTitle.innerText = title;
-            mText.innerText = message;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = message;
             modal.classList.remove('hidden');
             
-            mBtn.onclick = function() {
+            document.getElementById('modal-btn').onclick = function() {
                 modal.classList.add('hidden');
                 if (callback) callback();
             };
@@ -624,16 +621,31 @@
             updateScoreDisplay();
         }
 
-        // FUNÇÃO DE RETORNO GLOBAL PARA A TELA INICIAL
+        // CORREÇÃO DO BOTÃO DE RETORNO DA TELA INICIAL (Limpeza robusta e reinicialização completa)
         function returnToMainMenu() {
             playSound('click');
             state.canvasGameActive = false;
+            
+            // Cancela os loops de animação do Canvas que estavam rodando em segundo plano
             if (activeAnimationId) {
                 cancelAnimationFrame(activeAnimationId);
                 activeAnimationId = null;
             }
+
+            // Remove escutadores de teclado acumulados para evitar travamentos
+            if (activeKeydownHandler) {
+                window.removeEventListener('keydown', activeKeydownHandler);
+                activeKeydownHandler = null;
+            }
+            if (activeKeyupHandler) {
+                window.removeEventListener('keyup', activeKeyupHandler);
+                activeKeyupHandler = null;
+            }
+
+            // Limpa ponteiros de controle virtual de toque
+            document.getElementById('ctrl-action-jump').onclick = null;
             
-            // Esconder todas as telas possíveis do ecossistema
+            // Esconde todas as interfaces do ecossistema de fases
             document.getElementById('game-header').classList.add('hidden');
             document.getElementById('screen-map').classList.add('hidden');
             document.getElementById('screen-intro').classList.add('hidden');
@@ -643,7 +655,7 @@
             document.getElementById('screen-gameover').classList.add('hidden');
             document.getElementById('screen-victory').classList.add('hidden');
             
-            // Apresentar capa inicial
+            // Apresenta capa inicial limpa
             document.getElementById('screen-cover').classList.remove('hidden');
             document.getElementById('footer-status').innerText = "Inicialização";
         }
@@ -658,12 +670,10 @@
             }
             state.playerName = nameInput;
             
-            // Configurar display geral
             document.getElementById('display-hero-name').innerText = state.playerName;
             document.getElementById('display-hero-class').innerText = state.playerClass;
             document.getElementById('hero-icon').className = `fa-solid ${state.classIcon} text-lg text-[#f5ebe0]`;
             
-            // Transição para o Mapa
             document.getElementById('screen-cover').classList.add('hidden');
             document.getElementById('game-header').classList.remove('hidden');
             document.getElementById('screen-map').classList.remove('hidden');
@@ -673,41 +683,31 @@
             updateMapButtons();
         }
 
-        // Alterar e Configurar Classe (com influência real na dificuldade)
+        // Alterar e Configurar Classe
         function selectClass(className, icon, maxLives, descText) {
             playSound('click');
-            state.playerClass = className;
-            state.classIcon = icon;
-            state.maxLives = maxLives;
-            state.lives = maxLives;
+            state.playerClass = className; state.classIcon = icon; state.maxLives = maxLives; state.lives = maxLives;
 
-            // Ajustando a real dificuldade técnica de acordo com image_93c9a2.png
             if (className === 'Explorador') {
-                state.speedMultiplier = 1.25; // 25% mais rápido (muito mais difícil)
-                state.combatDamageMultiplier = 1.0;
+                state.speedMultiplier = 1.25; state.combatDamageMultiplier = 1.0;
             } else if (className === 'Diplomata') {
-                state.speedMultiplier = 1.0;
-                state.combatDamageMultiplier = 1.25; // 25% mais dano ao chefe (compensa ter apenas 2 vidas)
+                state.speedMultiplier = 1.0; state.combatDamageMultiplier = 1.25;
             } else {
-                state.speedMultiplier = 1.0;
-                state.combatDamageMultiplier = 1.0;
+                state.speedMultiplier = 1.0; state.combatDamageMultiplier = 1.0;
             }
 
             document.getElementById('class-desc').innerText = descText;
 
-            // Remove o destaque anterior de todas as classes
             document.querySelectorAll('.class-btn').forEach(btn => {
                 btn.classList.remove('border-[#c89d3c]', 'bg-[#3d2514]');
                 btn.classList.add('bg-[#24150b]', 'border-[#5a3d28]');
             });
 
-            // Adiciona realce à classe escolhida
             const activeId = `class-btn-${className.toLowerCase()}`;
             document.getElementById(activeId).classList.add('border-[#c89d3c]', 'bg-[#3d2514]');
             document.getElementById(activeId).classList.remove('bg-[#24150b]', 'border-[#5a3d28]');
         }
 
-        // MODIFICADO: Função do mapa agora mantém todas as fases permanentemente livres
         function updateMapButtons() {
             for (let i = 1; i <= 7; i++) {
                 const btn = document.getElementById(`map-btn-${i}`);
@@ -747,10 +747,7 @@
             
             const introScreen = document.getElementById('screen-intro');
             const startBtn = document.getElementById('btn-start-challenge');
-            
-            let title = "";
-            let text = "";
-            let inst = "";
+            let title = "", text = "", inst = "";
             
             switch(phaseNum) {
                 case 1:
@@ -785,7 +782,7 @@
                     break;
                 case 6:
                     title = "Fase 6: Goiás e o Plano da Marcha para o Oeste";
-                    text = "Para modernizar o Brasil central e diluir o poder secular das oligarquias tradicionais agrárias representadas pelo Caiadismo em Goiás Velho, o interventor Pedro Ludovico Teixeira aliou-se à 'Marcha para o Oeste' de Vargas. Conduza o avanço do progresso pelo cerrado goiano acidentado, saltando sobre os despenhadeiros geográficos e as patrulhas armadas dos barões coronéis por 60 segundos de pura adrenaline rumo à fundação planejada de Goiânia!";
+                    text = "Para modernizar o Brasil central e diluir o poder secular das oligarquias tradicionais agrárias representadas pelo Caiadismo em Goiás Velho, o interventor Pedro Ludovico Teixeira aliou-se à 'Marcha para o Oeste' de Vargas. Conduza o avanço do progresso pelo cerrado goiano acidentado, saltando sobre os despenhadeiros geográficos e as patrulhas armadas dos barões coronéis por 60 segundos de pura adrenalina rumo à fundação planejada de Goiânia!";
                     inst = "Seu teste final. Use o PULO DUPLO pressionando ESPAÇO duas vezes para vencer os precipícios profundos e os opositores agrários.";
                     startBtn.onclick = () => startCanvasGame('vargas_goias');
                     break;
@@ -801,7 +798,6 @@
             document.getElementById('intro-text').innerText = text;
             document.getElementById('intro-instructions').innerText = inst;
             introScreen.classList.remove('hidden');
-            document.getElementById('footer-status').innerText = `Lendo Introdução ${phaseNum}`;
         }
 
         function loadPhase7Iframe() {
@@ -828,50 +824,36 @@
         }
 
         // ==========================================
-        // DESAFIO 1: DIGITAR O CONCEITO COMPLETO (Referente a image_93648a.png)
+        // DESAFIO 1: DIGITAR O CONCEITO COMPLETO
         // ==========================================
         function loadPhase1Puzzle() {
             playSound('click');
             document.getElementById('screen-intro').classList.add('hidden');
-            
             const interactiveScreen = document.getElementById('screen-interactive');
             document.getElementById('interactive-title').innerText = "Fase 1: Decifre o Imperialismo";
             
-            const area = document.getElementById('interactive-area');
-            area.innerHTML = `
+            document.getElementById('interactive-area').innerHTML = `
                 <div class="parchment p-5 sm:p-6 max-w-lg w-full text-left shadow-lg">
                     <p class="text-xs italic mb-4 font-bold text-[#701c0c] border-b-2 border-dashed border-[#5a3d28] pb-1">
                         "Sem pistas fáceis de letras. Escreva os conceitos científicos e territoriais que ditaram a violenta fresta colonial do século XIX!"
                     </p>
-                    
                     <div class="space-y-4">
                         <div>
-                            <span class="text-[10px] uppercase bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-black">Conceito 1</span>
                             <p class="text-xs font-semibold mt-1">Nome do processo histórico de expansão econômica, exploração territorial e submissão política promovido pelas nações europeias na África e Ásia:</p>
                             <input type="text" id="concept1" placeholder="Escreva o conceito completo..." class="mt-1 border border-[#5a3d28] p-2 rounded w-full uppercase text-xs font-bold bg-[#fffdfa] text-black">
                         </div>
-                        
                         <div>
-                            <span class="text-[10px] uppercase bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-black">Conceito 2</span>
                             <p class="text-xs font-semibold mt-1">Nome da histórica conferência internacional europeia (1884-1885) que oficializou a partilha geográfica do continente africano:</p>
                             <input type="text" id="concept2" placeholder="Escreva o nome da conferência..." class="mt-1 border border-[#5a3d28] p-2 rounded w-full uppercase text-xs font-bold bg-[#fffdfa] text-black">
                         </div>
-                        
                         <div>
-                            <span class="text-[10px] uppercase bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-black">Conceito 3</span>
                             <p class="text-xs font-semibold mt-1">Doutrina pseudocientífica que distorceu as leis da evolução natural para fundamentar que as sociedades brancas industriais eram biologicamente superiores:</p>
                             <input type="text" id="concept3" placeholder="Escreva a denominação teórica..." class="mt-1 border border-[#5a3d28] p-2 rounded w-full uppercase text-xs font-bold bg-[#fffdfa] text-black">
                         </div>
                     </div>
-                    
-                    <button onclick="checkPhase1Answers()" class="btn-rpg w-full py-3.5 rounded mt-5 font-bold text-xs uppercase tracking-wider">
-                        ENVIAR CONCEITOS PARA VALIDAÇÃO <i class="fa-solid fa-key ml-2"></i>
-                    </button>
-                </div>
-            `;
-            
+                    <button onclick="checkPhase1Answers()" class="btn-rpg w-full py-3.5 rounded mt-5 font-bold text-xs uppercase tracking-wider">ENVIAR CONCEITOS PARA VALIDAÇÃO</button>
+                </div>`;
             interactiveScreen.classList.remove('hidden');
-            document.getElementById('footer-status').innerText = "Analisando Enigmas Conceituais";
         }
 
         function checkPhase1Answers() {
@@ -881,107 +863,55 @@
             
             const ok1 = (raw1 === "NEOCOLONIALISMO" || raw1 === "NEOCOLONIALISTA" || raw1 === "IMPERIALISMO");
             const ok2 = (raw2 === "BERLIM" || raw2 === "CONFERENCIA DE BERLIM" || raw2 === "CONFERENCIA BERLIM");
-            const ok3 = (raw3 === "DARWINISMO SOCIAL" || raw3 === "DARWINISTA SOCIAL" || raw3 === "TEORIA DARWINISTA SOCIAL");
+            const ok3 = (raw3 === "DARWINISMO SOCIAL");
             
             if (ok1 && ok2 && ok3) {
-                playSound('correct');
-                addScore(750);
-                showCustomAlert("Conexões Validadas", "Conceitos decifrados com excelência absoluta! As conexões telegráficas foram validadas. Otto von Bismarck o aguarda em Berlim!", () => {
-                    startBossFight();
-                });
+                playSound('correct'); addScore(750);
+                showCustomAlert("Conexões Validadas", "Conceitos decifrados!", startBossFight);
             } else {
-                playSound('wrong');
-                state.lives--;
-                updateLivesDisplay();
-                showCustomAlert("Incoerência Teórica", "CONCEITOS INCORRETOS OU INCOMPLETOS! A história não aceita anacronismos ou aproximações levianas. Você sofreu uma penalidade de Vida.", () => {
-                    if (state.lives <= 0) {
-                        triggerGameOver();
-                    }
-                });
+                playSound('wrong'); state.lives--; updateLivesDisplay();
+                showCustomAlert("Incoerência Teórica", "Conceitos incorretos!", () => { if (state.lives <= 0) triggerGameOver(); });
             }
         }
 
         // ==========================================
-        // DESAFIO 2: QUEBRA-CABEÇA DE DRAG AND DROP (Referente a image_92738d.png)
+        // DESAFIO 2: QUEBRA-CABEÇA DE DRAG AND DROP
         // ==========================================
         function loadPhase2Puzzle() {
             playSound('click');
             document.getElementById('screen-intro').classList.add('hidden');
-            
             const interactiveScreen = document.getElementById('screen-interactive');
             document.getElementById('interactive-title').innerText = "Fase 2: Classifique os Blocos Militares";
             
-            const area = document.getElementById('interactive-area');
-            area.innerHTML = `
+            document.getElementById('interactive-area').innerHTML = `
                 <div class="parchment p-5 sm:p-6 max-w-2xl w-full text-center shadow-lg">
-                    <p class="text-xs italic mb-4 font-bold text-[#701c0c] border-b-2 border-dashed border-[#5a3d28] pb-1">
-                        "Todas as nações possuem botões na mesma cor neutra. Não há pistas visuais fáceis de cor! Arraste-os para as caixas correspondentes!"
-                    </p>
-                    
-                    <!-- Área de origens dos países -->
                     <div id="countries-pool" class="flex flex-wrap justify-center gap-2 mb-6 p-4 bg-[#21130a] rounded-lg border border-[#5a3d28]">
-                        <div draggable="true" id="drag-russia" ondragstart="handleDragStart(event, 'Rússia', 'Entente')" onclick="handleTouchCountry(this, 'Rússia', 'Entente')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs transition-all shadow">Rússia</div>
-                        <div draggable="true" id="drag-alemanha" ondragstart="handleDragStart(event, 'Alemanha', 'Aliança')" onclick="handleTouchCountry(this, 'Alemanha', 'Aliança')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs transition-all shadow">Alemanha</div>
-                        <div draggable="true" id="drag-franca" ondragstart="handleDragStart(event, 'França', 'Entente')" onclick="handleTouchCountry(this, 'França', 'Entente')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs transition-all shadow">França</div>
-                        <div draggable="true" id="drag-austria" ondragstart="handleDragStart(event, 'Áustria-Hungria', 'Aliança')" onclick="handleTouchCountry(this, 'Áustria-Hungria', 'Aliança')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs transition-all shadow">Áustria-Hungria</div>
-                        <div draggable="true" id="drag-inglaterra" ondragstart="handleDragStart(event, 'Inglaterra', 'Entente')" onclick="handleTouchCountry(this, 'Inglaterra', 'Entente')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs transition-all shadow">Inglaterra</div>
-                        <div draggable="true" id="drag-otomano" ondragstart="handleDragStart(event, 'Império Otomano', 'Aliança')" onclick="handleTouchCountry(this, 'Império Otomano', 'Aliança')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs transition-all shadow">Império Otomano</div>
+                        <div draggable="true" id="drag-russia" ondragstart="handleDragStart(event, 'Rússia', 'Entente')" onclick="handleTouchCountry(this, 'Rússia', 'Entente')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs">Rússia</div>
+                        <div draggable="true" id="drag-alemanha" ondragstart="handleDragStart(event, 'Alemanha', 'Aliança')" onclick="handleTouchCountry(this, 'Alemanha', 'Aliança')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs">Alemanha</div>
+                        <div draggable="true" id="drag-franca" ondragstart="handleDragStart(event, 'França', 'Entente')" onclick="handleTouchCountry(this, 'França', 'Entente')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs">França</div>
+                        <div draggable="true" id="drag-austria" ondragstart="handleDragStart(event, 'Áustria-Hungria', 'Aliança')" onclick="handleTouchCountry(this, 'Áustria-Hungria', 'Aliança')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs">Áustria-Hungria</div>
+                        <div draggable="true" id="drag-inglaterra" ondragstart="handleDragStart(event, 'Inglaterra', 'Entente')" onclick="handleTouchCountry(this, 'Inglaterra', 'Entente')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs">Inglaterra</div>
+                        <div draggable="true" id="drag-otomano" ondragstart="handleDragStart(event, 'Império Otomano', 'Aliança')" onclick="handleTouchCountry(this, 'Império Otomano', 'Aliança')" class="draggable-country bg-[#5a3d28] text-[#f5ebe0] px-4 py-2.5 rounded border border-[#c89d3c] font-semibold text-xs">Império Otomano</div>
                     </div>
-
-                    <!-- Zonas de Descarte (Entente / Aliança) de acordo com image_92738d.png -->
                     <div class="grid grid-cols-2 gap-4">
-                        <div id="zone-entente" 
-                             ondragover="handleDragOver(event)" 
-                             ondragleave="handleDragLeave(event)"
-                             ondrop="handleDrop(event, 'Entente')"
-                             onclick="handleTouchTarget('Entente')"
-                             class="bg-blue-50/90 p-4 rounded-lg border-2 border-blue-800 text-left min-h-[160px] transition-all flex flex-col justify-between">
-                            <div>
-                                <h4 class="font-rpg-title text-blue-900 font-bold border-b border-blue-200 pb-1 mb-2 text-xs">
-                                    <i class="fa-solid fa-users-viewfinder mr-1"></i>TRÍPLICE ENTENTE
-                                </h4>
-                                <ul id="list-entente" class="space-y-1 text-xs list-disc pl-4 text-blue-950 font-semibold"></ul>
-                            </div>
-                            <span class="text-[9px] text-blue-500 font-semibold self-end italic uppercase">Drop ou Toque Aqui</span>
+                        <div id="zone-entente" ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'Entente')" onclick="handleTouchTarget('Entente')" class="bg-blue-50/90 p-4 rounded-lg border-2 border-blue-800 text-left min-h-[160px] flex flex-col justify-between">
+                            <div><h4 class="font-bold text-blue-900 text-xs">TRÍPLICE ENTENTE</h4><ul id="list-entente" class="space-y-1 text-xs list-disc pl-4 text-blue-950 font-semibold"></ul></div>
                         </div>
-                        <div id="zone-alianca" 
-                             ondragover="handleDragOver(event)" 
-                             ondragleave="handleDragLeave(event)"
-                             ondrop="handleDrop(event, 'Aliança')"
-                             onclick="handleTouchTarget('Aliança')"
-                             class="bg-red-50/90 p-4 rounded-lg border-2 border-red-800 text-left min-h-[160px] transition-all flex flex-col justify-between">
-                            <div>
-                                <h4 class="font-rpg-title text-red-900 font-bold border-b border-red-200 pb-1 mb-2 text-xs">
-                                    <i class="fa-solid fa-shield-halved mr-1"></i>TRÍPLICE ALIANÇA
-                                </h4>
-                                <ul id="list-alianca" class="space-y-1 text-xs list-disc pl-4 text-red-950 font-semibold"></ul>
-                            </div>
-                            <span class="text-[9px] text-red-500 font-semibold self-end italic uppercase">Drop ou Toque Aqui</span>
+                        <div id="zone-alianca" ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'Aliança')" onclick="handleTouchTarget('Aliança')" class="bg-red-50/90 p-4 rounded-lg border-2 border-red-800 text-left min-h-[160px] flex flex-col justify-between">
+                            <div><h4 class="font-bold text-red-900 text-xs">TRÍPLICE ALIANÇA</h4><ul id="list-alianca" class="space-y-1 text-xs list-disc pl-4 text-red-950 font-semibold"></ul></div>
                         </div>
                     </div>
-                    
-                    <button onclick="checkPhase2Answers()" class="btn-rpg w-full py-3 rounded mt-5 font-bold text-xs uppercase tracking-wider">
-                        CONSOLIDAR ALIANÇAS DO ACORDO <i class="fa-solid fa-file-contract ml-2"></i>
-                    </button>
-                </div>
-            `;
-            
+                    <button onclick="checkPhase2Answers()" class="btn-rpg w-full py-3 rounded mt-5 font-bold text-xs uppercase tracking-wider">CONSOLIDAR ALIANÇAS</button>
+                </div>`;
             interactiveScreen.classList.remove('hidden');
-            document.getElementById('footer-status').innerText = "Organizando Alianças Mundiais";
-            
             state.phase2_categorized = [];
             state.touchSelectedCountry = null;
         }
 
-        let dragData = null;
-        function handleDragStart(ev, name, correctCategory) {
-            dragData = { id: ev.target.id, name, correctCategory };
-            ev.dataTransfer.setData("text/plain", ev.target.id);
-        }
-        function handleDragOver(ev) { ev.preventDefault(); ev.currentTarget.classList.add('drag-over'); }
-        function handleDragLeave(ev) { ev.currentTarget.classList.remove('drag-over'); }
+        function handleDragStart(ev, name, correctCategory) { dragData = { id: ev.target.id, name, correctCategory }; }
+        function handleDragOver(ev) { ev.preventDefault(); }
         function handleDrop(ev, zoneCategory) {
-            ev.preventDefault(); ev.currentTarget.classList.remove('drag-over');
+            ev.preventDefault();
             if (dragData) {
                 const element = document.getElementById(dragData.id);
                 if (element) { element.remove(); registerCountryClassification(dragData.name, dragData.correctCategory, zoneCategory); }
@@ -989,37 +919,31 @@
             dragData = null;
         }
         function handleTouchCountry(element, name, correctCategory) {
-            playSound('click');
-            document.querySelectorAll('.draggable-country').forEach(el => el.classList.remove('selected-for-touch'));
-            state.touchSelectedCountry = { element, name, correctCategory };
-            element.classList.add('selected-for-touch');
+            playSound('click'); document.querySelectorAll('.draggable-country').forEach(el => el.classList.remove('selected-for-touch'));
+            state.touchSelectedCountry = { element, name, correctCategory }; element.classList.add('selected-for-touch');
         }
         function handleTouchTarget(zoneCategory) {
             if (!state.touchSelectedCountry) return;
-            playSound('click');
-            const element = state.touchSelectedCountry.element;
+            playSound('click'); const element = state.touchSelectedCountry.element;
             if (element) { element.remove(); registerCountryClassification(state.touchSelectedCountry.name, state.touchSelectedCountry.correctCategory, zoneCategory); }
             state.touchSelectedCountry = null;
         }
         function registerCountryClassification(name, correctCategory, placedCategory) {
-            const listId = placedCategory === "Entente" ? 'list-entente' : 'list-alianca';
-            document.getElementById(listId).innerHTML += `<li>${name} <i class="fa-solid fa-check text-green-600 ml-1"></i></li>`;
+            document.getElementById(placedCategory === "Entente" ? 'list-entente' : 'list-alianca').innerHTML += `<li>${name}</li>`;
             state.phase2_categorized.push({ name, correctCategory, placedCategory });
         }
         function checkPhase2Answers() {
-            if (state.phase2_categorized.length < 6) { showCustomAlert("Ação Interrompida", "Você precisa arrastar e classificar todas as 6 potências para selar os acordos!"); return; }
-            const errors = state.phase2_categorized.filter(item => item.correctCategory !== item.placedCategory);
-            if (errors.length === 0) {
-                playSound('correct'); addScore(750);
-                showCustomAlert("Tratados Firmados", "Tratados de Aliança consolidados com sucesso intelectual!", startBossFight);
+            if (state.phase2_categorized.length < 6) { showCustomAlert("Ação Interrompida", "Organize todas as potências!"); return; }
+            if (state.phase2_categorized.filter(item => item.correctCategory !== item.placedCategory).length === 0) {
+                playSound('correct'); addScore(750); showCustomAlert("Tratados Firmados", "Alianças consolidadas!", startBossFight);
             } else {
                 playSound('wrong'); state.lives--; updateLivesDisplay();
-                showCustomAlert("Conspiração Militar", `Incoerência nas alianças geopolíticas!`, () => { if (state.lives <= 0) triggerGameOver(); else loadPhase2Puzzle(); });
+                showCustomAlert("Erro Estratégico", "Erros detectados!", () => { if (state.lives <= 0) triggerGameOver(); else loadPhase2Puzzle(); });
             }
         }
 
         // ==========================================
-        // MINI-GAMES EM CANVAS ORIGINALMENTE MANTIDOS (Mínimo de 60s)
+        // SISTEMA DE MINIJOGOS CANVAS INTERNOS (Fidelidade Intacta)
         // ==========================================
         function startCanvasGame(gameType) {
             playSound('click');
@@ -1027,8 +951,7 @@
             const interactiveScreen = document.getElementById('screen-interactive');
             interactiveScreen.classList.remove('hidden');
             
-            const area = document.getElementById('interactive-area');
-            area.innerHTML = `
+            document.getElementById('interactive-area').innerHTML = `
                 <div class="relative w-full max-w-lg bg-black border-4 border-[#3d2514] rounded overflow-hidden shadow-2xl">
                     <canvas id="game-canvas" width="480" height="280" class="block w-full h-auto bg-[#0a0705]"></canvas>
                     <div id="canvas-hud" class="absolute top-2 left-2 right-2 flex justify-between font-retro text-lg sm:text-xl text-yellow-400 select-none">
@@ -1054,10 +977,9 @@
             const groundY = 225;
             let runSpeed = 5.0 * state.speedMultiplier;
             let frame = 0;
-            let obstacles = [];
-            let items = [];
-            let particles = [];            
-            let player = { x: 60, y: groundY - 32, w: 24, h: 32, vy: 0, isJumping: false, jumpCount: 0, emoji: '🏃', color: '#fbbf24' };
+            let obstacles = []; let items = [];
+            
+            let player = { x: 60, y: groundY - 32, w: 24, h: 32, vy: 0, isJumping: false, jumpCount: 0, emoji: '🏃' };
             let groundColor = '#3d2514'; let bgStyle = '#110b07';
             
             if (type === 'russian_revolution') { player.emoji = '☭'; groundColor = '#334155'; bgStyle = '#0f172a'; }
@@ -1089,14 +1011,15 @@
                 pacmanState = {
                     grid: mazeGrid, tileW: tileSize, tileH: tileSize, playerX: 1, playerY: 1, playerDirX: 0, playerDirY: 0, cltCollected: 0, cltTotalNeeded: totalDots,
                     ghosts: [
-                        { cx: 12, cy: 5, dx: 1, dy: 0, color: '#ef4444', emoji: '👥', label: 'Oligarca' },
-                        { cx: 8, cy: 9, dx: 0, dy: -1, color: '#a855f7', emoji: '👺', label: 'Integralista' }
+                        { cx: 12, cy: 5, dx: 1, dy: 0, color: '#ef4444', emoji: '👥' },
+                        { cx: 8, cy: 9, dx: 0, dy: -1, color: '#a855f7', emoji: '👺' }
                     ]
                 };
                 player.w = tileSize; player.h = tileSize;
             }
 
-            const handleKeyDown = (e) => {
+            // Atribuição de handlers de forma global para limpeza adequada posterior
+            activeKeydownHandler = (e) => {
                 if (type === 'vargas_pacman') {
                     if (e.code === "ArrowUp" || e.code === "KeyW") { e.preventDefault(); changePacmanDir(0, -1); }
                     if (e.code === "ArrowDown" || e.code === "KeyS") { e.preventDefault(); changePacmanDir(0, 1); }
@@ -1109,9 +1032,16 @@
                     if (e.code === "Space" || e.code === "ArrowUp" || e.code === "KeyW") { e.preventDefault(); triggerJump(); }
                 }
             };
-            const handleKeyUp = (e) => { if (type === 'crisis_1929' && (e.code === "ArrowUp" || e.code === "ArrowDown" || e.code === "KeyW" || e.code === "KeyS")) player.vy = 0; };
 
-            window.addEventListener('keydown', handleKeyDown); window.addEventListener('keyup', handleKeyUp);
+            activeKeyupHandler = (e) => {
+                if (type === 'crisis_1929' && (e.code === "ArrowUp" || e.code === "ArrowDown" || e.code === "KeyW" || e.code === "KeyS")) {
+                    player.vy = 0;
+                }
+            };
+
+            window.addEventListener('keydown', activeKeydownHandler);
+            window.addEventListener('keyup', activeKeyupHandler);
+            
             document.getElementById('ctrl-action-jump').onclick = () => { triggerJump(); };
             document.getElementById('dpad-up').onclick = () => changePacmanDir(0, -1);
             document.getElementById('dpad-down').onclick = () => changePacmanDir(0, 1);
@@ -1192,17 +1122,17 @@
                     ctx.font = '24px sans-serif'; ctx.fillText(player.emoji, player.x, player.y + 24);
                     if (remainingTime <= 0) { endGameSession(true); return; }
                 }
-                requestAnimationFrame(update);
+                activeAnimationId = requestAnimationFrame(update);
             }
 
             function endGameSession(won) {
                 state.canvasGameActive = false;
-                window.removeEventListener('keydown', handleKeyDown); window.removeEventListener('keyup', handleKeyUp);
-                if (won) { playSound('victory'); addScore(1000); showCustomAlert("Fronteira Superada", "Siga para a validação dialética de turno!", startBossFight); }
+                window.removeEventListener('keydown', activeKeydownHandler); window.removeEventListener('keyup', activeKeyupHandler);
+                if (won) { playSound('victory'); addScore(1000); showCustomAlert("Fronteira Superada", "Siga para a validação dialética!", startBossFight); }
                 else { triggerGameOver(); }
             }
             function rectCollision(ax, ay, aw, ah, bx, by, bw, bh) { return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by; }
-            requestAnimationFrame(update);
+            activeAnimationId = requestAnimationFrame(update);
         }
 
         // ==========================================
@@ -1296,10 +1226,6 @@
             });
         }
 
-        function resetGame() {
-            state.score = 0; state.lives = 3; state.maxLives = 3; state.currentPhase = 1; state.completedPhases = [];
-            updateScoreDisplay(); document.getElementById('screen-victory').classList.add('hidden'); document.getElementById('screen-cover').classList.remove('hidden');
-        }
         function updateScoreDisplay() { document.getElementById('display-score').innerText = state.score.toString().padStart(5, '0'); }
         function updateLivesDisplay() {
             const container = document.getElementById('display-lives'); container.innerHTML = "";
